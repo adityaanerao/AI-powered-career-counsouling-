@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - AI Career Guidance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .profile-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+        }
+
+        .profile-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: #777;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .history-item {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        .tag-exam {
+            background: #3498db;
+        }
+
+        .tag-career {
+            background: #9b59b6;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1><a href="index.html" style="color: white; text-decoration: none;">AI Career Guidance</a></h1>
+            </div>
+            <nav>
+                <button class="btn-secondary" onclick="logoutUser()">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="profile-container fade-in">
+            <aside class="profile-sidebar">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2 id="profileName">Loading...</h2>
+                <p id="profileEmail">loading...</p>
+            </aside>
+
+            <div class="profile-content">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="switchTab('history')">Activity History</button>
+                    <!-- <button class="tab-btn" onclick="switchTab('settings')">Settings</button> -->
+                </div>
+
+                <div id="historyTab">
+                    <h3>Your Journey</h3>
+                    <div id="historyList">
+                        <div class="placeholder-message">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading your history...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Use user ID from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('profileName').textContent = user.full_name;
+            document.getElementById('profileEmail').textContent = user.email;
+            fetchHistory(user.user_id);
+        }
+
+        function switchTab(tab) {
+            // Simple tab switch logic if extended
+        }
+
+        async function fetchHistory(userId) {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/history/${userId}`);
+                const data = await response.json();
+
+                const list = document.getElementById('historyList');
+                list.innerHTML = '';
+
+                if (data.history.length === 0) {
+                    list.innerHTML = '<p>No history found. Start exploring!</p>';
+                    return;
+                }
+
+                data.history.forEach(item => {
+                    const details = item.details;
+                    const date = new Date(item.created_at).toLocaleDateString();
+
+                    if (item.action_type === 'COLLEGE_CHECK') {
+                        list.innerHTML += `
+                            <div class="history-item">
+                                <div class="history-header">
+                                    <span class="tag tag-exam">${details.exam} Check</span>
+                                    <span style="color: #666; font-size: 0.9rem;">${date}</span>
+                                </div>
+                                <div>
+                                    <strong>Career:</strong> ${details.career} <br>
+                                    <strong>Details:</strong> ${details.percentile} Percentile (${details.category}) <br>
+                                    <strong>Result:</strong> Found ${details.colleges_found_count} eligible colleges
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error loading history", error);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career & CET Admission Guidance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>AI Career & CET Guidance</h1>
+            </div>
+            <nav id="authNav">
+                <!-- Will be populated by JS -->
+                <a href="login.html" class="btn-secondary" style="color: white; border-color: white;">Login</a>
+            </nav>
+            <!-- <p class="tagline">Intelligent career recommendations and college admission guidance</p> -->
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Introduction Section -->
+        <section class="intro-section fade-in">
+            <div class="intro-content">
+                <i class="fas fa-graduation-cap intro-icon"></i>
+                <h2>Welcome to AI-Powered Career & CET Admission Guidance</h2>
+                <p>Get personalized career recommendations based on your interests, skills, and academic performance.
+                    Then discover eligible colleges for Maharashtra CET admission based on your percentile and category.
+                </p>
+            </div>
+        </section>
+
+        <!-- Career Section -->
+        <section class="section career-section">
+            <div class="section-header">
+                <i class="fas fa-briefcase"></i>
+                <h2>Career Preference (AI Based)</h2>
+            </div>
+
+            <div class="form-card slide-up">
+                <div class="form-group">
+                    <label for="interests">
+                        <i class="fas fa-heart"></i> Interests
+                    </label>
+                    <input type="text" id="interests" placeholder="e.g. technology, problem solving, design">
+                    <small class="help-text">Separate interests with commas</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="skills">
+                        <i class="fas fa-cogs"></i> Skills
+                    </label>
+                    <input type="text" id="skills" placeholder="e.g. programming, analytics, communication">
+                    <small class="help-text">List your key skills and abilities</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="subjects">
+                        <i class="fas fa-book"></i> Subjects
+                    </label>
+                    <input type="text" id="subjects" placeholder="e.g. mathematics, physics, computer science">
+                    <small class="help-text">Mention your strongest academic subjects</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="cet-career">
+                        <i class="fas fa-chart-line"></i> CET Percentile (Optional)
+                    </label>
+                    <input type="number" id="cet" step="0.01" placeholder="e.g. 93.45" min="0" max="100">
+                    <small class="help-text">For more accurate recommendations</small>
+                </div>
+
+                <button class="btn-primary" onclick="getRecommendations()">
+                    <i class="fas fa-brain"></i> Get AI Career Recommendations
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="section-header results-header">
+                <i class="fas fa-lightbulb"></i>
+                <h2>Recommended Careers</h2>
+            </div>
+            <div id="results" class="results-container">
+                <div class="placeholder-message">
+                    <i class="fas fa-arrow-up"></i>
+                    <p>Enter your details above and click "Get AI Career Recommendations" to see your personalized
+                        career options.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CET/NEET Section -->
+        <section class="section cet-section">
+            <div class="section-header">
+                <i class="fas fa-university"></i>
+                <h2>Entrance Exam Admission Details</h2>
+            </div>
+
+            <div class="form-card slide-up delay-1">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exam">
+                            <i class="fas fa-file-alt"></i> Entrance Exam
+                        </label>
+                        <select id="exam" onchange="updateFormForExamType()">
+                            <option value="CET">MHT-CET (Engineering)</option>
+                            <option value="NEET">NEET (Medical)</option>
+                            <option value="JEE">JEE (National Engineering)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exam-percentile" id="percentile-label">
+                            <i class="fas fa-percentage"></i> <span id="percentile-text">CET Percentile</span>
+                        </label>
+                        <input type="number" id="exam-percentile" step="0.01" placeholder="e.g. 93.45" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">
+                            <i class="fas fa-users"></i> Category
+                        </label>
+                        <select id="category">
+                            <option value="OPEN">OPEN</option>
+                            <option value="EWS">EWS</option>
+                            <option value="OBC">OBC</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                            <option value="VJ">VJ</option>
+                            <option value="NT-A">NT-A</option>
+                            <option value="NT-B">NT-B</option>
+                            <option value="NT-C">NT-C</option>
+                            <option value="NT-D">NT-D</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">
+                            <i class="fas fa-city"></i> City
+                        </label>
+                        <select id="city">
+                            <option value="">All Cities</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Aurangabad">Aurangabad</option>
+                            <option value="Kolhapur">Kolhapur</option>
+                            <option value="Nashik">Nashik</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="branch">
+                            <i class="fas fa-code-branch"></i> Preferred Branch
+                        </label>
+                        <select id="branch">
+                            <option value="AUTO">Auto (From Career)</option>
+                            <option value="Computer Engineering">Computer Engineering</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Artificial Intelligence & Data Science">AI & Data Science</option>
+                            <option value="Artificial Intelligence & Machine Learning">AI & ML</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                            <option value="Civil Engineering">Civil Engineering</option>
+                            <option value="Electrical Engineering">Electrical Engineering</option>
+                            <option value="Electronics Engineering">Electronics Engineering</option>
+                            <option value="Electronics & Telecommunication Engineering">ENTC</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="university">
+                            <i class="fas fa-building"></i> University
+                        </label>
+                        <select id="university">
+                            <option value="">All Universities</option>
+                            <option value="1">Savitribai Phule Pune University</option>
+                            <option value="2">University of Mumbai</option>
+                            <option value="3">Dr. Babasaheb Ambedkar Technological University</option>
+                            <option value="4">Shivaji University</option>
+                            <option value="5">Rashtrasant Tukadoji Maharaj Nagpur University</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="state">
+                        <i class="fas fa-map-marker-alt"></i> State
+                    </label>
+                    <select id="state">
+                        <option value="Maharashtra">Maharashtra</option>
+                    </select>
+                </div>
+
+                <button class="btn-secondary" onclick="checkColleges()">
+                    <i class="fas fa-search"></i> Check Eligible Colleges
+                </button>
+            </div>
+
+
+
+            <!-- College Results Section -->
+            <div class="section-header results-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Eligible Colleges</h2>
+            </div>
+            <div id="collegeResults" class="results-container">
+                <div class="placeholder-message">
+                    <i class="fas fa-arrow-up"></i>
+                    <p>Fill in your CET details above and click "Check Eligible Colleges" to see college options.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>AI Career & CET Admission Guidance System &copy; 2023 | Powered by Advanced AI Algorithms</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

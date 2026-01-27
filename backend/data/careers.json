@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Software Engineer",
+    "description": "Software Engineers design, develop, test, and maintain software applications. The role requires strong programming, logical thinking, and problem-solving skills.",
+    "skills": ["Programming", "Problem Solving", "Data Structures", "Algorithms"],
+    "subjects": ["Mathematics", "Computer Science"],
+    "minimum_marks": {
+      "Mathematics": 60,
+      "Computer Science": 60
+    }
+  },
+  {
+    "id": 2,
+    "title": "Data Scientist",
+    "description": "Data Scientists analyze large datasets to extract insights using statistics, machine learning, and programming. They work with data visualization and predictive models.",
+    "skills": ["Python", "Statistics", "Machine Learning", "Data Analysis"],
+    "subjects": ["Mathematics", "Statistics", "Computer Science"],
+    "minimum_marks": {
+      "Mathematics": 65
+    }
+  },
+  {
+    "id": 3,
+    "title": "Graphic Designer",
+    "description": "Graphic Designers create visual concepts using design tools to communicate ideas. Creativity and visual thinking are essential for this role.",
+    "skills": ["Creativity", "Adobe Photoshop", "Illustration", "Visual Design"],
+    "subjects": ["Arts"],
+    "minimum_marks": {
+      "Arts": 50
+    }
+  },
+  {
+    "id": 4,
+    "title": "Mechanical Engineer",
+    "description": "Mechanical Engineers design and manufacture mechanical systems and machines. The role involves physics, mechanics, and material science.",
+    "skills": ["Mechanical Design", "Problem Solving", "CAD"],
+    "subjects": ["Physics", "Mathematics"],
+    "minimum_marks": {
+      "Mathematics": 60,
+      "Physics": 60
+    }
+  }
+]
