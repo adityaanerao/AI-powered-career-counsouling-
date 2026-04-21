@@ -1,58 +1,933 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - AI Career Guidance</title>
-    <link rel="stylesheet" href="styles.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --bg-secondary: #eef3f9;
+            --surface: rgba(255, 255, 255, 0.82);
+            --surface-strong: #ffffff;
+            --text: #172033;
+            --text-muted: #607089;
+            --primary: #1769ff;
+            --primary-dark: #0f4ed8;
+            --accent: #00b894;
+            --purple: #6c5ce7;
+            --border: rgba(23, 32, 51, 0.08);
+            --shadow-sm: 0 10px 30px rgba(23, 32, 51, 0.08);
+            --shadow-md: 0 18px 45px rgba(23, 32, 51, 0.12);
+            --shadow-lg: 0 24px 60px rgba(23, 32, 51, 0.16);
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 28px;
+            --gradient-primary: linear-gradient(135deg, #1769ff, #5b8cff);
+            --gradient-accent: linear-gradient(135deg, #00b894, #00cec9);
+            --gradient-purple: linear-gradient(135deg, #6c5ce7, #8e7dff);
+            --container: 1200px;
+            --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0b1220;
+            --bg-secondary: #10192b;
+            --surface: rgba(18, 28, 46, 0.82);
+            --surface-strong: #16233a;
+            --text: #eef4ff;
+            --text-muted: #a7b5cf;
+            --primary: #4d8dff;
+            --primary-dark: #2c74ff;
+            --accent: #1dd1a1;
+            --purple: #9b87ff;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.32);
+            --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.42);
+            --gradient-primary: linear-gradient(135deg, #4d8dff, #7ea7ff);
+            --gradient-accent: linear-gradient(135deg, #1dd1a1, #36e2d7);
+            --gradient-purple: linear-gradient(135deg, #8d7cff, #af9dff);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(23, 105, 255, 0.15), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(0, 184, 148, 0.12), transparent 24%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+        body::before {
+            top: -90px;
+            left: -90px;
+            background: rgba(23, 105, 255, 0.18);
+        }
+
+        body::after {
+            right: -90px;
+            bottom: -90px;
+            background: rgba(108, 92, 231, 0.16);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .page-wrap {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .logo-mark {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 1.2rem;
+            background: var(--gradient-primary);
+            box-shadow: 0 16px 30px rgba(23, 105, 255, 0.22);
+            flex-shrink: 0;
+        }
+
+        .logo-text h1 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.15;
+        }
+
+        .logo-text p {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .theme-toggle {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface-strong);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px) rotate(8deg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .auth-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 20px 0 40px;
+        }
+
+        .auth-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .hero-panel,
+        .form-panel {
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(18px);
+        }
+
+        .hero-panel {
+            position: relative;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)),
+                var(--gradient-primary);
+            color: white;
+            padding: 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 640px;
+        }
+
+        .hero-panel::before,
+        .hero-panel::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.10);
+            pointer-events: none;
+        }
+
+        .hero-panel::before {
+            width: 260px;
+            height: 260px;
+            top: -80px;
+            right: -50px;
+        }
+
+        .hero-panel::after {
+            width: 180px;
+            height: 180px;
+            left: 45%;
+            bottom: -55px;
+        }
+
+        .hero-content,
+        .hero-bottom {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 999px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1.08;
+            font-weight: 800;
+            max-width: 11ch;
+            margin-bottom: 16px;
+        }
+
+        .hero-text {
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 56ch;
+        }
+
+        .hero-highlights {
+            display: grid;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .highlight-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .highlight-card i {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.14);
+            flex-shrink: 0;
+        }
+
+        .highlight-card h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .highlight-card p {
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .hero-bottom {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .mini-stat {
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        .mini-stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .mini-stat .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .mini-stat .label {
+            font-size: 0.86rem;
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.5;
+        }
+
+        .form-panel {
+            background: var(--surface);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-card {
+            width: 100%;
+            background: var(--surface-strong);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(23, 105, 255, 0.05), transparent 60%);
+            pointer-events: none;
+        }
+
+        .form-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-top {
+            margin-bottom: 24px;
+        }
+
+        .form-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: rgba(23, 105, 255, 0.08);
+            color: var(--primary);
+            border: 1px solid rgba(23, 105, 255, 0.12);
+            font-size: 0.86rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .form-top h2 {
+            font-size: clamp(1.75rem, 3vw, 2.35rem);
+            line-height: 1.1;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .form-top p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.96rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            min-height: 56px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text);
+            padding: 0 48px 0 16px;
+            outline: none;
+            transition: var(--transition);
+            font-size: 0.96rem;
+            box-shadow: inset 0 1px 2px rgba(23, 32, 51, 0.03);
+        }
+
+        [data-theme="dark"] .input-wrap input {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .input-wrap input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-wrap input:focus {
+            border-color: rgba(23, 105, 255, 0.35);
+            box-shadow: 0 0 0 4px rgba(23, 105, 255, 0.10);
+            transform: translateY(-1px);
+        }
+
+        .field-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            background: transparent;
+            border: none;
+        }
+
+        .password-toggle:hover {
+            background: rgba(23, 105, 255, 0.08);
+            color: var(--primary);
+        }
+
+        .password-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 6px 0 18px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(0, 184, 148, 0.08);
+            color: #11856c;
+            font-size: 0.88rem;
+            border: 1px solid rgba(0, 184, 148, 0.14);
+        }
+
+        [data-theme="dark"] .password-note {
+            color: #7ae6c8;
+            background: rgba(29, 209, 161, 0.10);
+        }
+
+        .btn-primary {
+            width: 100%;
+            min-height: 56px;
+            border: none;
+            border-radius: 18px;
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 18px 36px rgba(23, 105, 255, 0.22);
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 44px rgba(23, 105, 255, 0.28);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .trust-row {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(23, 105, 255, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .float-anim {
+            animation: floatY 5s ease-in-out infinite;
+        }
+
+        @keyframes floatY {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .auth-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-panel {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: min(var(--container), calc(100% - 20px));
+            }
+
+            .header-inner {
+                padding: 12px 14px;
+                border-radius: 18px;
+            }
+
+            .logo-text h1 {
+                font-size: 0.98rem;
+            }
+
+            .logo-text p {
+                display: none;
+            }
+
+            .hero-panel,
+            .form-panel,
+            .form-card {
+                border-radius: 22px;
+            }
+
+            .hero-panel,
+            .form-panel {
+                padding: 20px;
+            }
+
+            .hero-panel {
+                min-height: auto;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                max-width: 100%;
+            }
+
+            .hero-bottom {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-mark {
+                width: 44px;
+                height: 44px;
+                border-radius: 14px;
+            }
+
+            .theme-toggle {
+                width: 42px;
+                height: 42px;
+            }
+
+            .hero-badge,
+            .form-chip,
+            .trust-badge {
+                font-size: 0.78rem;
+            }
+
+            .form-top h2 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
+<div class="page-wrap">
     <header class="header">
         <div class="container">
-            <div class="logo">
-                <i class="fas fa-robot"></i>
-                <h1><a href="index.html" style="color: white; text-decoration: none;">AI Career Guidance</a></h1>
+            <div class="header-inner reveal">
+                <a href="dashboard.html" class="logo" aria-label="Go to dashboard">
+                    <div class="logo-mark">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>AI Career Guidance</h1>
+                        <p>Smart planning for your academic future</p>
+                    </div>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="container" style="display: flex; justify-content: center; margin-top: 50px;">
-        <div class="form-card fade-in" style="width: 100%; max-width: 400px;">
-            <div class="section-header" style="justify-content: center;">
-                <h2>Register</h2>
+    <main class="auth-main">
+        <div class="container">
+            <div class="auth-grid">
+                <section class="hero-panel reveal">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-sparkles"></i>
+                            <span>Create your student profile</span>
+                        </div>
+
+                        <h2 class="hero-title">Start your career journey with confidence</h2>
+
+                        <p class="hero-text">
+                            Join a smarter guidance platform that helps students explore streams,
+                            exams, colleges, and future career opportunities through one clean system.
+                        </p>
+
+                        <div class="hero-highlights">
+                            <div class="highlight-card">
+                                <i class="fas fa-brain"></i>
+                                <div>
+                                    <h3>AI-powered suggestions</h3>
+                                    <p>Get guidance based on your interests, academic stage, and future goals.</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-card">
+                                <i class="fas fa-university"></i>
+                                <div>
+                                    <h3>College-focused planning</h3>
+                                    <p>Check eligibility, explore options, and move faster with better decision support.</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-card">
+                                <i class="fas fa-chart-line"></i>
+                                <div>
+                                    <h3>One dashboard, many paths</h3>
+                                    <p>Track streams, admissions, exams, and academic opportunities in one place.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-bottom">
+                        <div class="mini-stat float-anim">
+                            <div class="value">10th+</div>
+                            <div class="label">Guidance from school to higher education</div>
+                        </div>
+
+                        <div class="mini-stat">
+                            <div class="value">UG / PG</div>
+                            <div class="label">Support for graduation and post-graduation paths</div>
+                        </div>
+
+                        <div class="mini-stat">
+                            <div class="value">AI</div>
+                            <div class="label">Smarter recommendations and planning tools</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-panel reveal">
+                    <div class="form-card">
+                        <div class="form-top">
+                            <div class="form-chip">
+                                <i class="fas fa-user-plus"></i>
+                                <span>New account</span>
+                            </div>
+
+                            <h2>Register</h2>
+                            <p>Create your account to access personalized career guidance and admission tools.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fullName">
+                                <i class="fas fa-user"></i>
+                                Full Name
+                            </label>
+                            <div class="input-wrap">
+                                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                                <span class="field-icon"><i class="fas fa-user"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                Email
+                            </label>
+                            <div class="input-wrap">
+                                <input type="email" id="email" placeholder="Enter your email address" required>
+                                <span class="field-icon"><i class="fas fa-envelope"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i>
+                                Password
+                            </label>
+                            <div class="input-wrap">
+                                <input type="password" id="password" placeholder="Create a strong password" required>
+                                <button class="password-toggle" type="button" id="togglePassword" aria-label="Show password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="password-note">
+                            <i class="fas fa-shield-halved"></i>
+                            <span>Use a strong password to keep your account secure.</span>
+                        </div>
+
+                        <button class="btn-primary" onclick="registerUser()">
+                            <i class="fas fa-user-plus"></i>
+                            Register
+                        </button>
+
+                        <div class="form-footer">
+                            Already have an account?
+                            <a href="login.html">Login here</a>
+                        </div>
+
+                        <div class="trust-row">
+                            <div class="trust-badge">
+                                <i class="fas fa-lock"></i>
+                                <span>Secure form</span>
+                            </div>
+                            <div class="trust-badge">
+                                <i class="fas fa-bolt"></i>
+                                <span>Quick signup</span>
+                            </div>
+                            <div class="trust-badge">
+                                <i class="fas fa-circle-check"></i>
+                                <span>Easy access</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-
-            <div class="form-group">
-                <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
-                <input type="text" id="fullName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password"><i class="fas fa-lock"></i> Password</label>
-                <input type="password" id="password" required>
-            </div>
-
-            <button class="btn-primary" onclick="registerUser()" style="width: 100%;">
-                <i class="fas fa-user-plus"></i> Register
-            </button>
-
-            <p style="text-align: center; margin-top: 20px;">
-                Already have an account? <a href="login.html">Login here</a>
-            </p>
         </div>
     </main>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
+<script>
+    (function () {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        root.setAttribute('data-theme', currentTheme);
+
+        function updateThemeIcon() {
+            if (!themeToggle) return;
+            themeToggle.innerHTML = currentTheme === 'dark'
+                ? '<i class="fas fa-sun"></i>'
+                : '<i class="fas fa-moon"></i>';
+            themeToggle.setAttribute(
+                'aria-label',
+                currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+            );
+        }
+
+        updateThemeIcon();
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function () {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', currentTheme);
+                updateThemeIcon();
+            });
+        }
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function () {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                togglePassword.innerHTML = isPassword
+                    ? '<i class="fas fa-eye-slash"></i>'
+                    : '<i class="fas fa-eye"></i>';
+                togglePassword.setAttribute(
+                    'aria-label',
+                    isPassword ? 'Hide password' : 'Show password'
+                );
+            });
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach((el) => observer.observe(el));
+    })();
+</script>
 </body>
 
 </html>

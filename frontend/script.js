@@ -32,13 +32,13 @@ function updateAuthHeader() {
 
     if (user) {
         nav.innerHTML = `
-            <span style="color: white; margin-right: 15px;">Hello, ${user.full_name.split(' ')[0]}</span>
-            <a href="profile.html" class="btn-secondary" style="border-color: white; color: white;">My Profile</a>
+            <span style="color: white; margin-right: 15px; font-weight: 500;">Hello, ${user.full_name.split(' ')[0]}</span>
+            <a href="profile.html" class="btn-profile"><i class="fas fa-user-circle"></i> My Profile</a>
         `;
     } else {
         nav.innerHTML = `
-            <a href="login.html" class="btn-secondary" style="border-color: white; color: white;">Login</a>
-            <a href="register.html" class="btn-secondary" style="border-color: white; color: white; margin-left: 10px;">Register</a>
+            <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html" class="btn-register"><i class="fas fa-user-plus"></i> Get Started</a>
         `;
     }
 }
@@ -68,7 +68,7 @@ async function registerUser() {
         if (response.ok) {
             // Auto login
             localStorage.setItem('user', JSON.stringify({ user_id: data.user_id, full_name: data.name, email: email }));
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
         } else {
             alert(data.error || "Registration failed");
         }
@@ -97,7 +97,7 @@ async function loginUser() {
         const data = await response.json();
         if (response.ok) {
             localStorage.setItem('user', JSON.stringify(data.user));
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
         } else {
             alert(data.error || "Login failed");
         }
@@ -109,7 +109,7 @@ async function loginUser() {
 
 function logoutUser() {
     localStorage.removeItem('user');
-    window.location.href = 'index.html';
+    window.location.href = 'dashboard.html';
 }
 
 /* ===============================
@@ -132,95 +132,102 @@ function setupInputValidation() {
 }
 
 /* ===============================
-   Branch Options for Different Exams
-   =============================== */
-const CET_BRANCHES = [
-    { value: "AUTO", label: "Auto (From Career)" },
-    { value: "Computer Engineering", label: "Computer Engineering" },
-    { value: "Information Technology", label: "Information Technology" },
-    { value: "Artificial Intelligence & Data Science", label: "AI & Data Science" },
-    { value: "Artificial Intelligence & Machine Learning", label: "AI & ML" },
-    { value: "Data Science", label: "Data Science" },
-    { value: "Mechanical Engineering", label: "Mechanical Engineering" },
-    { value: "Civil Engineering", label: "Civil Engineering" },
-    { value: "Electrical Engineering", label: "Electrical Engineering" },
-    { value: "Electronics Engineering", label: "Electronics Engineering" },
-    { value: "Electronics & Telecommunication Engineering", label: "ENTC" }
-];
-
-const NEET_BRANCHES = [
-    { value: "AUTO", label: "Auto (From Career)" },
-    { value: "MBBS", label: "MBBS (Bachelor of Medicine)" },
-    { value: "BDS", label: "BDS (Dental Surgery)" },
-    { value: "BAMS", label: "BAMS (Ayurvedic Medicine)" },
-    { value: "BHMS", label: "BHMS (Homeopathy)" },
-    { value: "BUMS", label: "BUMS (Unani Medicine)" },
-    { value: "BPT", label: "BPT (Physiotherapy)" },
-    { value: "B.Sc Nursing", label: "B.Sc Nursing" },
-    { value: "B.Pharm", label: "B.Pharm (Pharmacy)" },
-    { value: "BVSc", label: "BVSc (Veterinary Science)" }
-];
-
-const JEE_BRANCHES = [
-    { value: "AUTO", label: "Auto (From Career)" },
-    { value: "Computer Science and Engineering", label: "Computer Science and Engineering" },
-    { value: "Information Technology", label: "Information Technology" },
-    { value: "Data Science and Engineering", label: "Data Science and Engineering" },
-    { value: "Artificial Intelligence", label: "Artificial Intelligence" },
-    { value: "Mechanical Engineering", label: "Mechanical Engineering" },
-    { value: "Civil Engineering", label: "Civil Engineering" },
-    { value: "Electrical Engineering", label: "Electrical Engineering" },
-    { value: "Electronics and Communication Engineering", label: "Electronics and Communication" },
-    { value: "Chemical Engineering", label: "Chemical Engineering" },
-    { value: "Aerospace Engineering", label: "Aerospace Engineering" }
-];
-
-/* ===============================
    Update Form Based on Exam Type
    =============================== */
 function updateFormForExamType() {
-    const examType = document.getElementById("exam").value;
+    const examSelect = document.getElementById("exam");
+    if (!examSelect) return;
+
+    const examType = examSelect.value;
     const percentileText = document.getElementById("percentile-text");
     const branchSelect = document.getElementById("branch");
+    const universitySelect = document.getElementById("university");
 
-    if (examType === "NEET") {
-        // Update to NEET
-        percentileText.textContent = "NEET Percentile";
+    // Update Label
+    if (percentileText) {
+        if (examType === "SSC") {
+            percentileText.textContent = "10th Percentage";
+        } else if (["CAT", "GATE", "MCA-CET", "CET-PG"].includes(examType)) {
+            percentileText.textContent = "Exam Score/Percentile";
+        } else {
+            percentileText.textContent = `${examType} Percentile`;
+        }
+    }
 
-        // Update branch options to medical branches
+    // Update Branches
+    if (branchSelect) {
         branchSelect.innerHTML = "";
-        NEET_BRANCHES.forEach(branch => {
-            const option = document.createElement("option");
-            option.value = branch.value;
-            option.textContent = branch.label;
-            branchSelect.appendChild(option);
-        });
-    } else if (examType === "JEE") {
-        // Update to JEE
-        percentileText.textContent = "JEE Percentile";
+        let options = [];
 
-        // Update branch options to engineering branches (JEE specific)
-        branchSelect.innerHTML = "";
-        JEE_BRANCHES.forEach(branch => {
-            const option = document.createElement("option");
-            option.value = branch.value;
-            option.textContent = branch.label;
-            branchSelect.appendChild(option);
-        });
-    } else {
-        // Update to CET
-        percentileText.textContent = "CET Percentile";
+        if (examType === "NEET") {
+            options = [
+                { value: "MBBS", label: "MBBS" },
+                { value: "BDS", label: "BDS (Dental)" },
+                { value: "BAMS", label: "BAMS (Ayurveda)" },
+                { value: "BHMS", label: "BHMS (Homeopathy)" },
+                { value: "B.Pharm", label: "B.Pharm" }
+            ];
+            if (universitySelect && universitySelect.parentElement) {
+                universitySelect.parentElement.style.display = 'none';
+            }
+        } else if (examType === "SSC") {
+            // Junior College
+            options = [
+                { value: "Science", label: "Science Stream" },
+                { value: "Commerce", label: "Commerce Stream" },
+                { value: "Arts", label: "Arts Stream" }
+            ];
+            if (universitySelect && universitySelect.parentElement) {
+                universitySelect.parentElement.style.display = 'none';
+            }
+        } else if (["CAT", "GATE", "MCA-CET", "CET-PG"].includes(examType)) {
+            // PG Courses
+            if (examType === "GATE") {
+                options = [{ value: "M.Tech CSE", label: "M.Tech CSE" }];
+            } else if (examType === "CAT" || examType === "CET-PG") {
+                options = [{ value: "MBA", label: "MBA" }];
+            } else if (examType === "MCA-CET") {
+                options = [{ value: "MCA", label: "MCA" }];
+            }
+            if (universitySelect && universitySelect.parentElement) {
+                universitySelect.parentElement.style.display = 'block';
+            }
+        } else {
+            // CET / JEE
+            options = [
+                { value: "Computer Engineering", label: "Computer Engineering" },
+                { value: "Information Technology", label: "Information Technology" },
+                { value: "Artificial Intelligence & Data Science", label: "AI & Data Science" },
+                { value: "Artificial Intelligence & Machine Learning", label: "AI & ML" },
+                { value: "Data Science", label: "Data Science" },
+                { value: "Mechanical Engineering", label: "Mechanical Engineering" },
+                { value: "Civil Engineering", label: "Civil Engineering" },
+                { value: "Electrical Engineering", label: "Electrical Engineering" },
+                { value: "Electronics & Telecommunication Engineering", label: "ENTC" }
+            ];
+            if (universitySelect && universitySelect.parentElement) {
+                universitySelect.parentElement.style.display = 'block';
+            }
+        }
 
-        // Update branch options to engineering branches
-        branchSelect.innerHTML = "";
-        CET_BRANCHES.forEach(branch => {
+        options.forEach(opt => {
             const option = document.createElement("option");
-            option.value = branch.value;
-            option.textContent = branch.label;
+            option.value = opt.value;
+            option.textContent = opt.label;
             branchSelect.appendChild(option);
         });
     }
 }
+
+// Initialize form on load
+document.addEventListener('DOMContentLoaded', function () {
+    const examSelect = document.getElementById('exam');
+    if (examSelect) {
+        examSelect.addEventListener('change', updateFormForExamType);
+        updateFormForExamType();
+    }
+});
+
 
 /* ===============================
    Career Recommendation (AI)
@@ -292,39 +299,84 @@ function displayCareerResults(data) {
     }
 
     data.recommendations.forEach((rec, index) => {
-        let explanationHTML = "<ul>";
+        let explanationHTML = "<ul class='explanation-list'>";
         rec.explanation.forEach(reason => {
             explanationHTML += `<li>${reason}</li>`;
         });
         explanationHTML += "</ul>";
 
-        // Determine icon based on career
+        // Determine icon based on category/career
         let icon = "💼";
-        if (rec.career.toLowerCase().includes("software") || rec.career.toLowerCase().includes("developer")) {
-            icon = "💻";
-        } else if (rec.career.toLowerCase().includes("data")) {
-            icon = "📊";
-        } else if (rec.career.toLowerCase().includes("engineer")) {
-            icon = "⚙️";
+        if (rec.category === "Technical") icon = "💻";
+        if (rec.category === "Medical") icon = "⚕️";
+        if (rec.category === "Arts") icon = "🎨";
+        if (rec.category === "Business") icon = "📊";
+        if (rec.category === "Government") icon = "🏛️";
+
+        // Trending Badge
+        let trendingBadge = "";
+        if (rec.outlook && (rec.outlook.includes("High") || rec.outlook.includes("Growth"))) {
+            trendingBadge = `<span class="badge badge-trending">🔥 ${rec.outlook}</span>`;
         }
 
         const card = document.createElement("div");
-        card.className = "career-card";
+        card.className = "career-card expanded-card";
         card.style.animationDelay = `${index * 0.1}s`;
 
         card.innerHTML = `
-            <h3>${icon} ${rec.career}</h3>
-            <p>${rec.description}</p>
+            <div class="card-header">
+                <h3>${icon} ${rec.career}</h3>
+                ${trendingBadge}
+            </div>
+            
+            <p class="career-desc">${rec.description}</p>
+            
             <div class="score-bar">
-                <strong>Suitability Score:</strong> 
+                <strong>Match Score:</strong> 
                 <div class="bar-container">
-                    <div class="bar-fill" style="width: ${rec.suitability_score}%"></div>
-                    <span class="score-text">${rec.suitability_score}%</span>
+                    <div class="bar-fill" style="width: ${rec.match_percentage}%"></div>
+                    <span class="score-text">${rec.match_percentage}%</span>
                 </div>
             </div>
-            <strong>Why this career?</strong>
-            ${explanationHTML}
+
+            <div class="career-details-grid">
+                <div class="detail-box">
+                    <strong>💰 Avg Salary</strong>
+                    <span>${rec.salary || "N/A"}</span>
+                </div>
+                <div class="detail-box">
+                    <strong>🎓 Degree</strong>
+                    <span>${rec.career_path?.recommended_degree || "Degree"}</span>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">Why Recommended? ▼</button>
+                <div class="panel">
+                    ${explanationHTML}
+                </div>
+                
+                <button class="accordion-btn">Education Path ▼</button>
+                <div class="panel">
+                    <p><strong>After 10th:</strong> ${rec.career_path?.after_10th_path || "N/A"}</p>
+                    <p><strong>Entrance Exams:</strong> ${rec.entrance_exams ? rec.entrance_exams.join(", ") : "N/A"}</p>
+                    <p><strong>Top Colleges:</strong> ${rec.top_colleges ? rec.top_colleges.join(", ") : "N/A"}</p>
+                </div>
+            </div>
         `;
+
+        // Add accordion functionality
+        card.querySelectorAll('.accordion-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        });
 
         resultsDiv.appendChild(card);
     });
@@ -376,7 +428,8 @@ async function checkColleges() {
 
     // Get career from AI card
     const careerElement = document.querySelector(".career-card h3");
-    let career = examType === "NEET" ? "Doctor" : "Software Engineer";
+    let career = selectedBranch ? selectedBranch :
+                 (examType === "NEET" ? "MBBS" : "Computer Engineering");
 
     if (careerElement) {
         // Remove emojis / symbols safely
@@ -519,7 +572,7 @@ function displayCollegeResults(data, cet) {
                 </div>
                 <div class="detail-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Location: ${college.location || "Mumbai"}</span>
+                    <span>Location: ${college.city || college.state || "Maharashtra"}</span>
                 </div>
             </div>
             <div class="college-status">

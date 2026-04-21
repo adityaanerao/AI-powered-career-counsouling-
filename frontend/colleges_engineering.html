@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Engineering College Search | CareerAI</title>
+    <link rel="stylesheet" href="dashboard-style.css">
+
+    <link rel="stylesheet" href="dashboard-style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <style>
+        :root {
+            --dark-bg: #06111f;
+            --dark-bg-2: #08192d;
+            --panel: rgba(20, 33, 57, 0.72);
+            --panel-strong: rgba(28, 43, 73, 0.88);
+            --panel-soft: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f5f7fb;
+            --muted: #a9b4c8;
+            --primary: #8fb2ff;
+            --primary-2: #5d8fff;
+            --success: #19d3a6;
+            --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.35);
+            --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.28);
+            --radius-xl: 28px;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at 0% 10%, rgba(35, 75, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 100% 90%, rgba(0, 184, 148, 0.14), transparent 25%),
+                linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .engineering-page {
+            padding: 22px 0 50px;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin: 12px 0 20px;
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-engineering {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.55fr 0.9fr;
+            gap: 26px;
+            padding: 34px;
+            background: linear-gradient(135deg, rgba(31, 46, 74, 0.92), rgba(15, 27, 51, 0.92));
+            border: 1px solid var(--border);
+            border-radius: 34px;
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 28px;
+        }
+
+        .hero-engineering::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(143, 178, 255, 0.10), transparent 30%),
+                radial-gradient(circle at 85% 85%, rgba(25, 211, 166, 0.08), transparent 22%);
+            pointer-events: none;
+        }
+
+        .hero-left,
+        .hero-right {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: #dce6ff;
+            font-size: 0.92rem;
+            font-weight: 500;
+            margin-bottom: 22px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .hero-engineering h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            line-height: 1.02;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            max-width: 8.5ch;
+        }
+
+        .hero-engineering h1 .accent {
+            color: var(--primary);
+        }
+
+        .hero-engineering p {
+            max-width: 60ch;
+            color: var(--muted);
+            font-size: 1.02rem;
+            line-height: 1.9;
+            margin-bottom: 24px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #dfe7f6;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 0.92rem;
+        }
+
+        .hero-right {
+            display: grid;
+            gap: 18px;
+        }
+
+        .info-card {
+            padding: 22px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(47, 65, 100, 0.72), rgba(31, 45, 73, 0.72));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .info-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .info-head h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #eaf0ff;
+            margin: 0;
+        }
+
+        .info-head i {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f2f6ff;
+        }
+
+        .info-value {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            color: var(--muted);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .glass-section {
+            background: linear-gradient(180deg, rgba(17, 28, 48, 0.82), rgba(11, 21, 37, 0.88));
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 28px;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(18px);
+            margin-bottom: 26px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .section-header > i {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(93, 143, 255, 0.95), rgba(143, 178, 255, 0.75));
+            color: white;
+            box-shadow: 0 16px 30px rgba(93, 143, 255, 0.22);
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            color: white;
+            font-size: 1.55rem;
+            margin: 0 0 6px;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.7;
+            font-size: 0.96rem;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e6edff;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            min-height: 54px;
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.045);
+            color: white;
+            outline: none;
+            font-size: 0.96rem;
+            transition: var(--transition);
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: rgba(143, 178, 255, 0.6);
+            box-shadow: 0 0 0 4px rgba(143, 178, 255, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #8b97af;
+        }
+
+        .form-group select option {
+            color: #111827;
+        }
+
+        .search-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .search-note {
+            color: var(--muted);
+            font-size: 0.94rem;
+            line-height: 1.7;
+        }
+
+        .btn-secondary {
+            border: none;
+            min-height: 54px;
+            padding: 14px 22px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #5d8fff, #8fb2ff);
+            color: #071321;
+            font-weight: 700;
+            box-shadow: 0 18px 30px rgba(93, 143, 255, 0.22);
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 36px rgba(93, 143, 255, 0.28);
+        }
+
+        .results-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .results-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            color: #dcebff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .results-container {
+            min-height: 280px;
+        }
+
+        .placeholder-message {
+            min-height: 260px;
+            border-radius: 24px;
+            border: 1px dashed rgba(143, 178, 255, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(143, 178, 255, 0.04));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .placeholder-message i {
+            width: 72px;
+            height: 72px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #5d8fff, #8fb2ff);
+            color: #071321;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            box-shadow: 0 18px 30px rgba(93, 143, 255, 0.25);
+        }
+
+        .placeholder-message h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .placeholder-message p {
+            max-width: 56ch;
+            color: var(--muted);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .footer {
+            padding-bottom: 26px;
+        }
+
+        .footer .container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 18px 20px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1100px) {
+            .hero-engineering {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .engineering-page {
+                padding-top: 16px;
+            }
+
+            .container {
+                width: min(1200px, calc(100% - 20px));
+            }
+
+            .hero-engineering,
+            .glass-section {
+                padding: 20px;
+                border-radius: 24px;
+            }
+
+            .hero-engineering h1 {
+                font-size: 2.6rem;
+                max-width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-secondary {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-engineering h1 {
+                font-size: 2.15rem;
+            }
+
+            .hero-badge,
+            .hero-tag,
+            .results-chip {
+                font-size: 0.84rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="navbar-container"></div>
+
+<main class="container engineering-page">
+    <div class="top-actions">
+        <button class="theme-toggle" aria-label="Dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <section class="hero-engineering fade-up active">
+        <div class="hero-left">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>AI-Powered Engineering Admission Dashboard</span>
+            </div>
+
+            <h1>
+                Find Your <span class="accent">Engineering</span>
+                College Match
+            </h1>
+
+            <p>
+                Explore eligible engineering colleges using MHT-CET or JEE Main,
+                filtered by percentile, category, city, branch, and university in one polished dashboard.
+            </p>
+
+            <div class="hero-tags">
+                <div class="hero-tag">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Percentile-based search</span>
+                </div>
+                <div class="hero-tag">
+                    <i class="fas fa-building-columns"></i>
+                    <span>University filters</span>
+                </div>
+                <div class="hero-tag">
+                    <i class="fas fa-map-location-dot"></i>
+                    <span>City-wise options</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="info-card">
+                <div class="info-head">
+                    <h3>Top Exams</h3>
+                    <i class="fas fa-compass"></i>
+                </div>
+                <div class="info-value">CET / JEE</div>
+                <div class="info-text">Search admission possibilities using the exam path most relevant to you.</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-head">
+                    <h3>Smart Filters</h3>
+                    <i class="fas fa-sliders"></i>
+                </div>
+                <div class="info-value">5+</div>
+                <div class="info-text">Category, city, university, percentile, and branch filters for refined results.</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-head">
+                    <h3>Career Focus</h3>
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="info-value">CS / AI / Core</div>
+                <div class="info-text">Pick trending or traditional branches based on your preference.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-section fade-up">
+        <div class="section-header">
+            <i class="fas fa-university"></i>
+            <div>
+                <h2>Engineering Admission (MHT-CET / JEE)</h2>
+                <p>Enter your exam and preference details to find colleges that match your profile.</p>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="exam">
+                        <i class="fas fa-file-alt"></i> Entrance Exam
+                    </label>
+                    <select id="exam" onchange="updateFormForExamType()">
+                        <option value="CET" selected>MHT-CET</option>
+                        <option value="JEE">JEE Main</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exam-percentile" id="percentile-label">
+                        <i class="fas fa-percentage"></i>
+                        <span id="percentile-text">CET Percentile</span>
+                    </label>
+                    <input type="number" id="exam-percentile" step="0.01" placeholder="e.g. 93.45" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">
+                        <i class="fas fa-users"></i> Category
+                    </label>
+                    <select id="category">
+                        <option value="OPEN">OPEN</option>
+                        <option value="EWS">EWS</option>
+                        <option value="OBC">OBC</option>
+                        <option value="SC">SC</option>
+                        <option value="ST">ST</option>
+                        <option value="VJ">VJ</option>
+                        <option value="NT-A">NT-A</option>
+                        <option value="NT-B">NT-B</option>
+                        <option value="NT-C">NT-C</option>
+                        <option value="NT-D">NT-D</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">
+                        <i class="fas fa-city"></i> City
+                    </label>
+                    <select id="city">
+                        <option value="">All Cities</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Nagpur">Nagpur</option>
+                        <option value="Aurangabad">Aurangabad</option>
+                        <option value="Kolhapur">Kolhapur</option>
+                        <option value="Nashik">Nashik</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="branch">
+                        <i class="fas fa-code-branch"></i> Preferred Branch
+                    </label>
+                    <select id="branch">
+                        <option value="Computer Engineering">Computer Engineering</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Artificial Intelligence & Data Science">AI & Data Science</option>
+                        <option value="Artificial Intelligence & Machine Learning">AI & ML</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                        <option value="Electronics & Telecommunication Engineering">ENTC</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="university">
+                        <i class="fas fa-building"></i> University
+                    </label>
+                    <select id="university">
+                        <option value="">All Universities</option>
+                        <option value="1">Savitribai Phule Pune University</option>
+                        <option value="2">University of Mumbai</option>
+                        <option value="3">Dr. Babasaheb Ambedkar Technological University</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="search-bottom">
+                <div class="search-note">
+                    Use accurate percentile and category details for better college prediction results.
+                </div>
+
+                <button class="btn-secondary" onclick="checkColleges()">
+                    <i class="fas fa-search"></i> Check Eligible Colleges
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-section fade-up">
+        <div class="results-header-row">
+            <div class="section-header" style="margin-bottom:0;">
+                <i class="fas fa-graduation-cap"></i>
+                <div>
+                    <h2>Eligible Colleges</h2>
+                    <p>Your filtered engineering college options will appear here.</p>
+                </div>
+            </div>
+
+            <div class="results-chip">
+                <i class="fas fa-filter"></i>
+                <span>Filtered Results</span>
+            </div>
+        </div>
+
+        <div id="collegeResults" class="results-container">
+            <div class="placeholder-message">
+                <i class="fas fa-school"></i>
+                <h3>College matches will appear here</h3>
+                <p>
+                    Fill in your exam details, choose your preferred branch and category,
+                    then click <strong>Check Eligible Colleges</strong> to see matching options.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>AI Career & CET Admission Guidance System &copy; 2026</p>
+    </div>
+</footer>
+
+<script src="components/navbar.js"></script>
+<script src="script.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const revealEls = document.querySelectorAll(".fade-up");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach((el) => observer.observe(el));
+    });
+</script>
+</body>
+
+</html>

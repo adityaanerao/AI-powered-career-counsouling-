@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical College Search | CareerAI</title>
+    <link rel="stylesheet" href="dashboard-style.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #f4f7fc;
+            --bg-secondary: #edf3fb;
+            --surface: rgba(255, 255, 255, 0.86);
+            --surface-strong: #ffffff;
+            --text: #172033;
+            --text-muted: #61708d;
+            --border: rgba(23, 32, 51, 0.09);
+            --primary: #1769ff;
+            --primary-dark: #0f4fd9;
+            --accent: #00b894;
+            --danger: #ff6b6b;
+            --purple: #6c5ce7;
+            --orange: #ff9f43;
+            --hero-gradient: linear-gradient(135deg, #1769ff 0%, #4d8cff 55%, #6dd5fa 100%);
+            --accent-gradient: linear-gradient(135deg, #00b894, #00cec9);
+            --purple-gradient: linear-gradient(135deg, #6c5ce7, #8e7dff);
+            --orange-gradient: linear-gradient(135deg, #ff9f43, #ffc371);
+            --shadow-sm: 0 12px 30px rgba(23, 32, 51, 0.08);
+            --shadow-md: 0 18px 45px rgba(23, 32, 51, 0.12);
+            --shadow-lg: 0 24px 70px rgba(23, 32, 51, 0.16);
+            --radius-sm: 14px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --container: 1220px;
+            --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0b1220;
+            --bg-secondary: #101a2c;
+            --surface: rgba(16, 25, 43, 0.82);
+            --surface-strong: #162238;
+            --text: #eff5ff;
+            --text-muted: #a8b5d0;
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #4d8dff;
+            --primary-dark: #2a73ff;
+            --accent: #1dd1a1;
+            --danger: #ff8787;
+            --purple: #9f8bff;
+            --orange: #ffb454;
+            --hero-gradient: linear-gradient(135deg, #1e56d9 0%, #3f7cff 50%, #26a0da 100%);
+            --accent-gradient: linear-gradient(135deg, #1dd1a1, #36e2d7);
+            --purple-gradient: linear-gradient(135deg, #8d7cff, #b09cff);
+            --orange-gradient: linear-gradient(135deg, #ffb454, #ffd27d);
+            --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.22);
+            --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.30);
+            --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.38);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(23, 105, 255, 0.14), transparent 24%),
+                radial-gradient(circle at top right, rgba(0, 184, 148, 0.12), transparent 24%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.38;
+            pointer-events: none;
+        }
+
+        body::before {
+            top: -90px;
+            left: -70px;
+            background: rgba(23, 105, 255, 0.22);
+        }
+
+        body::after {
+            bottom: -90px;
+            right: -70px;
+            background: rgba(0, 184, 148, 0.18);
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .top-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 24px auto 14px;
+            width: min(var(--container), calc(100% - 32px));
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-4px) rotate(8deg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .medical-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            padding: 36px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+                var(--hero-gradient);
+            color: #fff;
+            display: grid;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 24px;
+            align-items: center;
+            min-height: 320px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            isolation: isolate;
+        }
+
+        .medical-hero::before,
+        .medical-hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.10);
+            z-index: -1;
+        }
+
+        .medical-hero::before {
+            width: 260px;
+            height: 260px;
+            top: -80px;
+            right: -40px;
+        }
+
+        .medical-hero::after {
+            width: 180px;
+            height: 180px;
+            left: 42%;
+            bottom: -50px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            margin-bottom: 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(12px);
+            font-size: 0.92rem;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .medical-hero h1 {
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 14px;
+            max-width: 12ch;
+        }
+
+        .medical-hero p {
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.8;
+            font-size: 1rem;
+            max-width: 62ch;
+            margin-bottom: 22px;
+        }
+
+        .hero-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 215, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            color
+        }
+
+        .hero-pill:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .hero-side {
+            display: grid;
+            gap: 16px;
+        }
+
+        .hero-mini-card {
+            padding: 20px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .hero-mini-card:hover {
+            transform: translateY(-6px) scale(1.01);
+        }
+
+        .hero-mini-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .hero-mini-top i {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .hero-mini-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .hero-mini-card p {
+            margin: 0;
+            font-size: 0.93rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .section {
+            margin-top: 30px;
+            padding: 28px;
+            border-radius: 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .section-header i {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            color: #fff;
+            background: var(--hero-gradient);
+            box-shadow: 0 14px 28px rgba(23, 105, 255, 0.20);
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .form-card,
+        .insight-card,
+        .results-container {
+            background: var(--surface-strong);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .form-card {
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(23, 105, 255, 0.06), transparent 55%);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .form-card:hover::before {
+            opacity: 1;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            min-height: 54px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: rgba(23, 105, 255, 0.03);
+            color: var(--text);
+            outline: none;
+            font-size: 0.96rem;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .form-group input,
+        [data-theme="dark"] .form-group select {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: rgba(23, 105, 255, 0.4);
+            box-shadow: 0 0 0 4px rgba(23, 105, 255, 0.10);
+            transform: translateY(-1px);
+        }
+
+        .form-helper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .helper-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(23, 105, 255, 0.08);
+            color: var(--primary);
+            border: 1px solid rgba(23, 105, 255, 0.12);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            min-height: 56px;
+            border: none;
+            border-radius: 18px;
+            background: var(--hero-gradient);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 18px 32px rgba(23, 105, 255, 0.22);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 42px rgba(23, 105, 255, 0.28);
+        }
+
+        .insight-panel {
+            display: grid;
+            gap: 18px;
+        }
+
+        .insight-card {
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(23, 105, 255, 0.05), transparent 60%);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .insight-card:hover::before {
+            opacity: 1;
+        }
+
+        .insight-card:hover,
+        .form-card:hover,
+        .results-container:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .insight-card .top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .insight-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .insight-card p {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 0.94rem;
+        }
+
+        .insight-icon {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            color: #fff;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            box-shadow: 0 14px 28px rgba(23, 32, 51, 0.16);
+        }
+
+        .icon-blue {
+            background: var(--hero-gradient);
+        }
+
+        .icon-green {
+            background: var(--accent-gradient);
+        }
+
+        .icon-purple {
+            background: var(--purple-gradient);
+        }
+
+        .insight-list {
+            margin-top: 16px;
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .insight-list li {
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            font-size: 0.93rem;
+        }
+
+        .insight-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.12);
+        }
+
+        .results-wrapper {
+            margin-top: 28px;
+        }
+
+        .results-header {
+            margin-bottom: 18px;
+        }
+
+        .results-container {
+            min-height: 240px;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .results-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(23, 105, 255, 0.04), transparent 70%);
+            pointer-events: none;
+        }
+
+        .placeholder-message {
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 14px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .placeholder-message i {
+            width: 64px;
+            height: 64px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(23, 105, 255, 0.08);
+            color: var(--primary);
+            font-size: 1.4rem;
+            box-shadow: 0 14px 30px rgba(23, 105, 255, 0.10);
+            animation: floatUpDown 3.4s ease-in-out infinite;
+        }
+
+        .placeholder-message p {
+            max-width: 60ch;
+            line-height: 1.8;
+            font-size: 0.97rem;
+        }
+
+        .footer {
+            margin-top: 34px;
+            padding: 0 0 32px;
+        }
+
+        .footer .container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            padding: 18px 22px;
+            color: var(--text-muted);
+        }
+
+        .fade-in-page {
+            opacity: 0;
+            transform: translateY(34px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in-page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tilt-hover {
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .medical-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container,
+            .top-toolbar {
+                width: min(var(--container), calc(100% - 22px));
+            }
+
+            .top-toolbar {
+                margin-top: 16px;
+            }
+
+            .medical-hero {
+                padding: 22px;
+                border-radius: 22px;
+                min-height: auto;
+            }
+
+            .medical-hero h1 {
+                font-size: 2rem;
+                max-width: 100%;
+            }
+
+            .section {
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-pills {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-pill {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .section-header h2 {
+                font-size: 1.28rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .medical-hero,
+            .section,
+            .form-card,
+            .insight-card,
+            .results-container {
+                border-radius: 18px;
+            }
+
+            .medical-hero {
+                padding: 18px;
+            }
+
+            .hero-badge {
+                font-size: 0.82rem;
+                padding: 8px 12px;
+            }
+
+            .theme-toggle {
+                width: 44px;
+                height: 44px;
+            }
+
+            .btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="navbar-container"></div>
+
+<div class="top-toolbar fade-in-page">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+</div>
+
+<main class="container">
+    <section class="medical-hero fade-in-page">
+        <div>
+            <div class="hero-badge">
+                <i class="fas fa-heart-pulse"></i>
+                <span>Medical Admission Guidance Dashboard</span>
+            </div>
+
+            <h1>Search the Right Medical Colleges with Confidence</h1>
+            <p>
+                Enter your NEET details, category, city, and course preference to check suitable medical college options
+                in a cleaner, smarter, and more student-friendly interface.
+            </p>
+
+            <div class="hero-pills">
+                <div class="hero-pill"><i class="fas fa-stethoscope"></i> MBBS / BDS / BAMS / BHMS</div>
+                <div class="hero-pill"><i class="fas fa-file-waveform"></i> NEET-based filtering</div>
+                <div class="hero-pill"><i class="fas fa-location-dot"></i> City-wise search</div>
+            </div>
+        </div>
+
+        <div class="hero-side">
+            <div class="hero-mini-card tilt-hover">
+                <div class="hero-mini-top">
+                    <span>Primary Exam</span>
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h3>NEET</h3>
+                <p>Medical admission search focused for NEET-based eligibility and college filtering.</p>
+            </div>
+
+            <div class="hero-mini-card tilt-hover">
+                <div class="hero-mini-top">
+                    <span>Courses</span>
+                    <i class="fas fa-user-doctor"></i>
+                </div>
+                <h3>5 Options</h3>
+                <p>Explore MBBS, BDS, BAMS, BHMS, and B.Pharm pathways from one screen.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in-page">
+        <div class="section-header">
+            <i class="fas fa-user-md"></i>
+            <h2>Medical Admission (NEET)</h2>
+        </div>
+
+        <div class="dashboard-layout">
+            <!-- Left Side Form -->
+            <div class="form-card tilt-hover">
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="exam">
+                                <i class="fas fa-file-alt"></i> Entrance Exam
+                            </label>
+                            <select id="exam" onchange="updateFormForExamType()">
+                                <option value="NEET" selected>NEET (Medical)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exam-percentile" id="percentile-label">
+                                <i class="fas fa-percentage"></i>
+                                <span id="percentile-text">NEET Percentile</span>
+                            </label>
+                            <input type="number" id="exam-percentile" step="0.01" placeholder="e.g. 93.45" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="category">
+                                <i class="fas fa-users"></i> Category
+                            </label>
+                            <select id="category">
+                                <option value="OPEN">OPEN</option>
+                                <option value="OBC">OBC</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                                <option value="EWS">EWS</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">
+                                <i class="fas fa-city"></i> City
+                            </label>
+                            <select id="city">
+                                <option value="">All Cities</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Nagpur">Nagpur</option>
+                                <option value="Aurangabad">Aurangabad</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="branch">
+                                <i class="fas fa-stethoscope"></i> Course
+                            </label>
+                            <select id="branch">
+                                <option value="MBBS">MBBS</option>
+                                <option value="BDS">BDS (Dental)</option>
+                                <option value="BAMS">BAMS (Ayurveda)</option>
+                                <option value="BHMS">BHMS (Homeopathy)</option>
+                                <option value="B.Pharm">B.Pharm</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-helper">
+                        <div class="helper-chip"><i class="fas fa-bolt"></i> Fast filtering</div>
+                        <div class="helper-chip"><i class="fas fa-layer-group"></i> Category-wise inputs</div>
+                        <div class="helper-chip"><i class="fas fa-school"></i> College discovery</div>
+                    </div>
+
+                    <button class="btn-secondary" onclick="checkColleges()">
+                        <i class="fas fa-search"></i> Check Eligible Colleges
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Side Insights -->
+            <div class="insight-panel">
+                <div class="insight-card tilt-hover">
+                    <div class="top">
+                        <div>
+                            <h3>How to use this tool</h3>
+                            <p>Enter your NEET percentile, choose category, select city if needed, and pick your preferred medical course.</p>
+                        </div>
+                        <div class="insight-icon icon-blue">
+                            <i class="fas fa-circle-info"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-card tilt-hover">
+                    <div class="top">
+                        <div>
+                            <h3>Included course options</h3>
+                            <p>Use one screen to explore mainstream medical and allied healthcare options.</p>
+                        </div>
+                        <div class="insight-icon icon-green">
+                            <i class="fas fa-notes-medical"></i>
+                        </div>
+                    </div>
+                    <ul class="insight-list">
+                        <li>MBBS for core medical education.</li>
+                        <li>BDS for dental studies and oral healthcare.</li>
+                        <li>BAMS and BHMS for alternative medicine pathways.</li>
+                        <li>B.Pharm for pharmaceutical and healthcare industry roles.</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card tilt-hover">
+                    <div class="top">
+                        <div>
+                            <h3>Search smarter</h3>
+                            <p>Use city and category filters to narrow results and make college exploration easier.</p>
+                        </div>
+                        <div class="insight-icon icon-purple">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-wrapper">
+            <div class="section-header results-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Eligible Colleges</h2>
+            </div>
+
+            <div id="collegeResults" class="results-container">
+                <div class="placeholder-message">
+                    <i class="fas fa-arrow-up"></i>
+                    <p>Fill in your NEET details above and click "Check Eligible Colleges" to view eligible medical college options here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer fade-in-page">
+    <div class="container">
+        <p>AI Career & CET Admission Guidance System &copy; 2026</p>
+    </div>
+</footer>
+
+<!-- Keep existing JS files -->
+<script src="components/navbar.js"></script>
+<script src="script.js"></script>
+
+<!-- Extra JS only for UI enhancements -->
+<script>
+    (function () {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        root.setAttribute('data-theme', currentTheme);
+
+        function updateThemeIcon() {
+            if (!themeToggle) return;
+            themeToggle.innerHTML = currentTheme === 'dark'
+                ? '<i class="fas fa-sun"></i>'
+                : '<i class="fas fa-moon"></i>';
+            themeToggle.setAttribute(
+                'aria-label',
+                currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+            );
+        }
+
+        updateThemeIcon();
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function () {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', currentTheme);
+                updateThemeIcon();
+            });
+        }
+
+        const revealItems = document.querySelectorAll('.fade-in-page');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealItems.forEach(item => observer.observe(item));
+
+        const tiltItems = document.querySelectorAll('.tilt-hover');
+        tiltItems.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return;
+
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const rotateX = ((y / rect.height) - 0.5) * -6;
+                const rotateY = ((x / rect.width) - 0.5) * 6;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    })();
+</script>
+</body>
+
+</html>

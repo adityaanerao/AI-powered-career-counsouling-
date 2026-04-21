@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Career Preference | CareerAI</title>
+
+    <link rel="stylesheet" href="dashboard-style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <style>
+        :root {
+            --dark-bg: #06111f;
+            --dark-bg-2: #08192d;
+            --panel: rgba(20, 33, 57, 0.72);
+            --panel-strong: rgba(28, 43, 73, 0.88);
+            --panel-soft: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f5f7fb;
+            --muted: #a9b4c8;
+            --primary: #8fb2ff;
+            --primary-2: #5d8fff;
+            --success: #19d3a6;
+            --warning: #f7b955;
+            --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.35);
+            --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.28);
+            --radius-xl: 30px;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at 0% 10%, rgba(35, 75, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 100% 90%, rgba(0, 184, 148, 0.12), transparent 24%),
+                linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .career-ai-page {
+            padding: 22px 0 50px;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin: 12px 0 20px;
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-career {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.5fr 0.92fr;
+            gap: 26px;
+            padding: 34px;
+            background: linear-gradient(135deg, rgba(31, 46, 74, 0.92), rgba(15, 27, 51, 0.92));
+            border: 1px solid var(--border);
+            border-radius: 34px;
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 28px;
+        }
+
+        .hero-career::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 35%, rgba(143, 178, 255, 0.10), transparent 30%),
+                radial-gradient(circle at 80% 85%, rgba(25, 211, 166, 0.08), transparent 22%);
+            pointer-events: none;
+        }
+
+        .hero-left,
+        .hero-right {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: #dce6ff;
+            font-size: 0.92rem;
+            font-weight: 500;
+            margin-bottom: 22px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .hero-career h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            line-height: 1.02;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+            max-width: 8.2ch;
+        }
+
+        .hero-career h1 .accent {
+            color: var(--primary);
+        }
+
+        .hero-career p {
+            max-width: 60ch;
+            color: var(--muted);
+            font-size: 1.02rem;
+            line-height: 1.9;
+            margin-bottom: 24px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #dfe7f6;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 0.92rem;
+        }
+
+        .hero-right {
+            display: grid;
+            gap: 18px;
+        }
+
+        .info-card {
+            padding: 22px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(47, 65, 100, 0.72), rgba(31, 45, 73, 0.72));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .info-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .info-head h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #eaf0ff;
+            margin: 0;
+        }
+
+        .info-head i {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f2f6ff;
+        }
+
+        .info-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            color: var(--muted);
+            font-size: 0.97rem;
+            line-height: 1.7;
+        }
+
+        .glass-section {
+            background: linear-gradient(180deg, rgba(17, 28, 48, 0.82), rgba(11, 21, 37, 0.88));
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 28px;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(18px);
+            margin-bottom: 26px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .section-header > i {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(93, 143, 255, 0.95), rgba(143, 178, 255, 0.75));
+            color: white;
+            box-shadow: 0 16px 30px rgba(93, 143, 255, 0.22);
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            color: white;
+            font-size: 1.55rem;
+            margin: 0 0 6px;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.7;
+            font-size: 0.96rem;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e6edff;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            min-height: 54px;
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.045);
+            color: white;
+            outline: none;
+            font-size: 0.96rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            border-color: rgba(143, 178, 255, 0.6);
+            box-shadow: 0 0 0 4px rgba(143, 178, 255, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #8b97af;
+        }
+
+        .help-text {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.6;
+        }
+
+        .search-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .search-note {
+            color: var(--muted);
+            font-size: 0.94rem;
+            line-height: 1.7;
+            max-width: 56ch;
+        }
+
+        .btn-primary {
+            border: none;
+            min-height: 54px;
+            padding: 14px 22px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #5d8fff, #8fb2ff);
+            color: #071321;
+            font-weight: 700;
+            box-shadow: 0 18px 30px rgba(93, 143, 255, 0.22);
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 36px rgba(93, 143, 255, 0.28);
+        }
+
+        .results-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .results-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            color: #dcebff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .results-container {
+            min-height: 280px;
+        }
+
+        .placeholder-message {
+            min-height: 260px;
+            border-radius: 24px;
+            border: 1px dashed rgba(143, 178, 255, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(143, 178, 255, 0.04));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .placeholder-message i {
+            width: 72px;
+            height: 72px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #5d8fff, #8fb2ff);
+            color: #071321;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            box-shadow: 0 18px 30px rgba(93, 143, 255, 0.25);
+        }
+
+        .placeholder-message h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .placeholder-message p {
+            max-width: 58ch;
+            color: var(--muted);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .footer {
+            padding-bottom: 26px;
+        }
+
+        .footer .container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 18px 20px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1100px) {
+            .hero-career {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-ai-page {
+                padding-top: 16px;
+            }
+
+            .container {
+                width: min(1200px, calc(100% - 20px));
+            }
+
+            .hero-career,
+            .glass-section {
+                padding: 20px;
+                border-radius: 24px;
+            }
+
+            .hero-career h1 {
+                font-size: 2.6rem;
+                max-width: 100%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-career h1 {
+                font-size: 2.15rem;
+            }
+
+            .hero-badge,
+            .hero-tag,
+            .results-chip {
+                font-size: 0.84rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="navbar-container"></div>
+
+<main class="container career-ai-page">
+    <div class="top-actions">
+        <button class="theme-toggle" aria-label="Dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-career fade-up active">
+        <div class="hero-left">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>AI-Powered Career Planning Dashboard</span>
+            </div>
+
+            <h1>
+                Discover Your <span class="accent">Career</span>
+                Direction
+            </h1>
+
+            <p>
+                Get smarter career recommendations based on your interests, skills,
+                academic strengths, and optional score details in one polished AI guidance interface.
+            </p>
+
+            <div class="hero-tags">
+                <div class="hero-tag">
+                    <i class="fas fa-heart"></i>
+                    <span>Interest-based insights</span>
+                </div>
+                <div class="hero-tag">
+                    <i class="fas fa-brain"></i>
+                    <span>AI-powered matching</span>
+                </div>
+                <div class="hero-tag">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Academic-aware guidance</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="info-card">
+                <div class="info-head">
+                    <h3>Input Areas</h3>
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <div class="info-value">5+</div>
+                <div class="info-text">Interests, skills, subjects, CET score, and 12th percentage for refined suggestions.</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-head">
+                    <h3>Recommendation Style</h3>
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="info-value">AI Based</div>
+                <div class="info-text">Career paths are aligned with your profile instead of generic one-size-fits-all advice.</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-head">
+                    <h3>Best For</h3>
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="info-value">Students</div>
+                <div class="info-text">Useful for exploring professional directions after 10th, 12th, CET, or before admission planning.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form -->
+    <section class="glass-section fade-up">
+        <div class="section-header">
+            <i class="fas fa-briefcase"></i>
+            <div>
+                <h2>Career Preference (AI Based)</h2>
+                <p>Enter your background and strengths so the system can recommend suitable career options.</p>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="interests">
+                        <i class="fas fa-heart"></i> Interests
+                    </label>
+                    <input type="text" id="interests" placeholder="e.g. technology, problem solving, design">
+                    <small class="help-text">Separate interests with commas for better matching.</small>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="skills">
+                        <i class="fas fa-cogs"></i> Skills
+                    </label>
+                    <input type="text" id="skills" placeholder="e.g. programming, analytics, communication">
+                    <small class="help-text">Add your strongest skills, personal strengths, or abilities.</small>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="subjects">
+                        <i class="fas fa-book"></i> Subjects
+                    </label>
+                    <input type="text" id="subjects" placeholder="e.g. mathematics, physics, computer science">
+                    <small class="help-text">Mention the academic subjects you perform best in.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="cet">
+                        <i class="fas fa-chart-line"></i> CET Percentile (Optional)
+                    </label>
+                    <input type="number" id="cet" step="0.01" placeholder="e.g. 93.45" min="0" max="100">
+                    <small class="help-text">Improves recommendation accuracy for entrance-based paths.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="twelfth">
+                        <i class="fas fa-graduation-cap"></i> 12th Percentage (Optional)
+                    </label>
+                    <input type="number" id="twelfth" step="0.01" placeholder="e.g. 85.0" min="0" max="100">
+                    <small class="help-text">Useful for course eligibility and academic fit.</small>
+                </div>
+            </div>
+
+            <div class="search-bottom">
+                <div class="search-note">
+                    Add specific interests and strengths to get more relevant career recommendations from the AI engine.
+                </div>
+
+                <button class="btn-primary" onclick="getRecommendations()">
+                    <i class="fas fa-brain"></i> Get AI Career Recommendations
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="glass-section fade-up">
+        <div class="results-header-row">
+            <div class="section-header" style="margin-bottom:0;">
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                    <h2>Recommended Careers</h2>
+                    <p>Your personalized AI career recommendations will appear here.</p>
+                </div>
+            </div>
+
+            <div class="results-chip">
+                <i class="fas fa-stars"></i>
+                <span>AI Suggestions Panel</span>
+            </div>
+        </div>
+
+        <div id="results" class="results-container">
+            <div class="placeholder-message">
+                <i class="fas fa-compass"></i>
+                <h3>Your career matches will appear here</h3>
+                <p>
+                    Enter your interests, skills, and subject strengths above, then click
+                    <strong>Get AI Career Recommendations</strong> to explore the best-fit career options.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>AI Career & CET Admission Guidance System &copy; 2026</p>
+    </div>
+</footer>
+
+<script src="components/navbar.js"></script>
+<script src="script.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const revealEls = document.querySelectorAll(".fade-up");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach((el) => observer.observe(el));
+    });
+</script>
+</body>
+
+</html>

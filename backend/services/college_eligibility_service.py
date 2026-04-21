@@ -63,8 +63,8 @@ def get_eligible_colleges_cet(
             c.city,
             b.branch_name,
             cb.category_code,
-            cb.cutoff_percentile,
-            cb.available_seats
+            MAX(cb.cutoff_percentile) as cutoff_percentile,
+            MAX(cb.available_seats) as available_seats
         FROM college_branch_cutoffs cb
         INNER JOIN branches b ON cb.branch_id = b.branch_id
         INNER JOIN colleges c ON cb.college_id = c.college_id
@@ -88,8 +88,11 @@ def get_eligible_colleges_cet(
         query += " AND c.city = %s"
         params.append(city)
 
+    # Group by College Name and Branch Name to remove duplicates caused by redundant Branch IDs
+    query += " GROUP BY c.college_id, b.branch_name, cb.category_code"
+
     # Order by cutoff percentile descending and limit results to prevent overwhelming UI
-    query += " ORDER BY cb.cutoff_percentile DESC LIMIT 100"
+    query += " ORDER BY MAX(cb.cutoff_percentile) DESC LIMIT 100"
 
     cursor.execute(query, params)
     results = cursor.fetchall()
@@ -97,4 +100,48 @@ def get_eligible_colleges_cet(
     cursor.close()
     conn.close()
 
+    return results
+
+def get_eligible_colleges_flat(
+        exam_type,
+        cutoff_percentile,
+        city=None,
+        preferred_branch=None
+):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Query flat columns in colleges table
+    query = """
+        SELECT
+            college_name,
+            branch as branch_name,
+            city,
+            cutoff_percentile,
+            'N/A' as available_seats
+        FROM colleges
+        WHERE
+            exam = %s
+            AND cutoff_percentile <= %s
+    """
+    params = [exam_type, cutoff_percentile]
+
+    if city and str(city).strip():
+        query += " AND city = %s"
+        params.append(city)
+
+    if preferred_branch and str(preferred_branch).strip():
+        query += " AND branch = %s"
+        params.append(preferred_branch)
+
+    query += " ORDER BY cutoff_percentile DESC LIMIT 50"
+
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+    
+    # Process results to match format of centralized service if needed
+    # (The frontend expects: college_name, branch_name, cutoff_percentile, city, available_seats)
+    
+    cursor.close()
+    conn.close()
     return results
