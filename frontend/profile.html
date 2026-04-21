@@ -1,196 +1,969 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - AI Career Guidance</title>
-    <link rel="stylesheet" href="styles.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
     <style>
+        :root {
+            --bg: #f4f7fc;
+            --bg-secondary: #edf3fb;
+            --surface: rgba(255, 255, 255, 0.84);
+            --surface-strong: #ffffff;
+            --text: #182235;
+            --text-muted: #66758f;
+            --border: rgba(24, 34, 53, 0.08);
+            --primary: #1769ff;
+            --primary-dark: #0f4fd9;
+            --accent: #00b894;
+            --purple: #6c5ce7;
+            --orange: #ff9f43;
+            --shadow-sm: 0 10px 30px rgba(24, 34, 53, 0.08);
+            --shadow-md: 0 18px 45px rgba(24, 34, 53, 0.12);
+            --shadow-lg: 0 26px 70px rgba(24, 34, 53, 0.16);
+            --gradient-primary: linear-gradient(135deg, #1769ff 0%, #4d8cff 55%, #6dd5fa 100%);
+            --gradient-accent: linear-gradient(135deg, #00b894, #00cec9);
+            --gradient-purple: linear-gradient(135deg, #6c5ce7, #8e7dff);
+            --gradient-orange: linear-gradient(135deg, #ff9f43, #ffc371);
+            --radius-sm: 14px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --container: 1240px;
+            --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #09111f;
+            --bg-secondary: #101a2d;
+            --surface: rgba(16, 25, 43, 0.80);
+            --surface-strong: #162238;
+            --text: #eef4ff;
+            --text-muted: #a9b7d1;
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #4d8dff;
+            --primary-dark: #2d73ff;
+            --accent: #1dd1a1;
+            --purple: #9f8bff;
+            --orange: #ffb454;
+            --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.22);
+            --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.30);
+            --shadow-lg: 0 26px 70px rgba(0, 0, 0, 0.38);
+            --gradient-primary: linear-gradient(135deg, #1e56d9 0%, #407bff 55%, #2bb7f0 100%);
+            --gradient-accent: linear-gradient(135deg, #1dd1a1, #36e2d7);
+            --gradient-purple: linear-gradient(135deg, #8d7cff, #b09cff);
+            --gradient-orange: linear-gradient(135deg, #ffb454, #ffd27d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(23, 105, 255, 0.15), transparent 24%),
+                radial-gradient(circle at bottom right, rgba(0, 184, 148, 0.12), transparent 24%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.40;
+            pointer-events: none;
+        }
+
+        body::before {
+            top: -90px;
+            left: -70px;
+            background: rgba(23, 105, 255, 0.22);
+        }
+
+        body::after {
+            right: -70px;
+            bottom: -90px;
+            background: rgba(0, 184, 148, 0.18);
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 16px 0;
+            background: rgba(10, 17, 31, 0.08);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-mark {
+            width: 52px;
+            height: 52px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            background: var(--gradient-primary);
+            box-shadow: 0 18px 32px rgba(23, 105, 255, 0.24);
+            font-size: 1.2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.12rem;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .logo-text a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-text p {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle,
+        .btn-secondary {
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px) rotate(8deg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            min-height: 48px;
+            padding: 0 18px;
+            border-radius: 14px;
+            background: rgba(255, 107, 107, 0.10);
+            color: #e74c3c;
+            font-weight: 700;
+            border: 1px solid rgba(255, 107, 107, 0.14);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 107, 107, 0.16);
+        }
+
+        .page-shell {
+            padding: 30px 0 40px;
+        }
+
+        .profile-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            padding: 34px;
+            margin-bottom: 26px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05)),
+                var(--gradient-primary);
+            color: #fff;
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .profile-hero::before,
+        .profile-hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        .profile-hero::before {
+            width: 240px;
+            height: 240px;
+            right: -40px;
+            top: -70px;
+        }
+
+        .profile-hero::after {
+            width: 170px;
+            height: 170px;
+            left: 42%;
+            bottom: -40px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(10px);
+            margin-bottom: 18px;
+            font-size: 0.92rem;
+        }
+
+        .profile-hero h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.08;
+            font-weight: 800;
+            margin-bottom: 12px;
+            max-width: 12ch;
+        }
+
+        .profile-hero p {
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.8;
+            max-width: 58ch;
+        }
+
+        .hero-stats {
+            display: grid;
+            gap: 14px;
+        }
+
+        .hero-stat {
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .hero-stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .hero-stat-top i {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .hero-stat h3 {
+            font-size: 1.45rem;
+            margin-bottom: 4px;
+        }
+
+        .hero-stat p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
         .profile-container {
             display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: 330px 1fr;
+            gap: 24px;
+        }
+
+        .profile-sidebar,
+        .profile-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .profile-sidebar:hover,
+        .profile-content:hover {
+            box-shadow: var(--shadow-md);
         }
 
         .profile-sidebar {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 26px;
             text-align: center;
+            position: sticky;
+            top: 100px;
+            align-self: start;
         }
 
         .profile-avatar {
-            width: 100px;
-            height: 100px;
-            background: var(--primary-color);
+            width: 112px;
+            height: 112px;
+            background: var(--gradient-primary);
             color: white;
-            border-radius: 50%;
+            border-radius: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
-            margin: 0 auto 1rem;
+            margin: 0 auto 18px;
+            box-shadow: 0 18px 32px rgba(23, 105, 255, 0.24);
+        }
+
+        .profile-sidebar h2 {
+            font-size: 1.45rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .profile-sidebar p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            word-break: break-word;
+        }
+
+        .profile-badges {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(23, 105, 255, 0.08);
+            color: var(--primary);
+            border: 1px solid rgba(23, 105, 255, 0.12);
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         .profile-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 26px;
+        }
+
+        .content-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .content-title h3 {
+            font-size: 1.6rem;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .content-title p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .summary-chip {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(0, 184, 148, 0.10);
+            color: var(--accent);
+            border: 1px solid rgba(0, 184, 148, 0.14);
+            font-weight: 700;
+            font-size: 0.88rem;
         }
 
         .tab-buttons {
             display: flex;
-            border-bottom: 2px solid #eee;
-            margin-bottom: 2rem;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 1rem 2rem;
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: #777;
+            padding: 12px 18px;
+            background: rgba(23, 105, 255, 0.05);
+            border: 1px solid transparent;
+            font-weight: 700;
+            color: var(--text-muted);
             cursor: pointer;
-            border-bottom: 3px solid transparent;
+            border-radius: 14px;
+            transition: var(--transition);
         }
 
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+        .tab-btn.active,
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(23, 105, 255, 0.10);
+            border-color: rgba(23, 105, 255, 0.12);
+        }
+
+        .journey-card {
+            background: var(--surface-strong);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .journey-card h4 {
+            font-size: 1.18rem;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .journey-card .journey-sub {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .history-list {
+            display: grid;
+            gap: 18px;
         }
 
         .history-item {
-            border-bottom: 1px solid #eee;
-            padding: 1rem 0;
+            position: relative;
+            background: linear-gradient(180deg, var(--surface-strong), rgba(255,255,255,0.88));
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 20px 20px 20px 54px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .history-item {
+            background: linear-gradient(180deg, var(--surface-strong), rgba(22, 34, 56, 0.90));
+        }
+
+        .history-item::before {
+            content: "";
+            position: absolute;
+            left: 24px;
+            top: 26px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 6px rgba(23, 105, 255, 0.10);
+        }
+
+        .history-item::after {
+            content: "";
+            position: absolute;
+            left: 29px;
+            top: 42px;
+            bottom: -22px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(23, 105, 255, 0.22), transparent);
+        }
+
+        .history-item:last-child::after {
+            display: none;
+        }
+
+        .history-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(23, 105, 255, 0.14);
         }
 
         .history-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .history-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .history-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .tag {
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.78rem;
             color: white;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .tag-exam {
-            background: #3498db;
+            background: var(--gradient-primary);
         }
 
         .tag-career {
-            background: #9b59b6;
+            background: var(--gradient-purple);
+        }
+
+        .history-body {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .history-body strong {
+            color: var(--text);
+        }
+
+        .placeholder-message {
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 14px;
+            color: var(--text-muted);
+        }
+
+        .placeholder-message i {
+            width: 64px;
+            height: 64px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(23, 105, 255, 0.08);
+            color: var(--primary);
+            font-size: 1.35rem;
+            box-shadow: 0 14px 30px rgba(23, 105, 255, 0.10);
+        }
+
+        .fade-in-page {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in-page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .float-soft {
+            animation: floatSoft 4.5s ease-in-out infinite;
+        }
+
+        @keyframes floatSoft {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .profile-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: min(var(--container), calc(100% - 22px));
+            }
+
+            .header .container {
+                align-items: flex-start;
+            }
+
+            .profile-hero,
+            .profile-sidebar,
+            .profile-content {
+                border-radius: 22px;
+            }
+
+            .profile-hero {
+                padding: 22px;
+            }
+
+            .profile-content,
+            .profile-sidebar {
+                padding: 20px;
+            }
+
+            .profile-hero h2 {
+                font-size: 2rem;
+                max-width: 100%;
+            }
+
+            .history-item {
+                padding: 18px 18px 18px 46px;
+            }
+
+            .history-item::before {
+                left: 18px;
+            }
+
+            .history-item::after {
+                left: 23px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .logo-mark {
+                width: 46px;
+                height: 46px;
+                border-radius: 16px;
+            }
+
+            .theme-toggle {
+                width: 44px;
+                height: 44px;
+            }
+
+            .btn-secondary {
+                min-height: 44px;
+                padding: 0 14px;
+            }
+
+            .profile-avatar {
+                width: 96px;
+                height: 96px;
+                font-size: 2.5rem;
+                border-radius: 28px;
+            }
+
+            .profile-hero,
+            .profile-sidebar,
+            .profile-content,
+            .journey-card {
+                border-radius: 18px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="logo">
+<header class="header fade-in-page">
+    <div class="container">
+        <div class="logo">
+            <div class="logo-mark float-soft">
                 <i class="fas fa-robot"></i>
-                <h1><a href="index.html" style="color: white; text-decoration: none;">AI Career Guidance</a></h1>
             </div>
-            <nav>
-                <button class="btn-secondary" onclick="logoutUser()">Logout</button>
-            </nav>
+            <div class="logo-text">
+                <h1><a href="dashboard.html">AI Career Guidance</a></h1>
+                <p>Your personalized student dashboard</p>
+            </div>
         </div>
-    </header>
 
-    <main class="container">
-        <div class="profile-container fade-in">
-            <aside class="profile-sidebar">
-                <div class="profile-avatar">
-                    <i class="fas fa-user"></i>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="btn-secondary" onclick="logoutUser()">
+                <i class="fas fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="container page-shell">
+    <section class="profile-hero fade-in-page">
+        <div>
+            <div class="hero-badge">
+                <i class="fas fa-user-shield"></i>
+                <span>Student Profile Dashboard</span>
+            </div>
+            <h2>Track your guidance journey in one place</h2>
+            <p>
+                View your profile, revisit college search activity, and keep your
+                academic exploration organized through a cleaner and more premium dashboard experience.
+            </p>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-top">
+                    <span>Profile Access</span>
+                    <i class="fas fa-id-badge"></i>
                 </div>
-                <h2 id="profileName">Loading...</h2>
-                <p id="profileEmail">loading...</p>
-            </aside>
+                <h3>Secure</h3>
+                <p>Your account details and activity feed are shown in one personalized space.</p>
+            </div>
 
-            <div class="profile-content">
-                <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="switchTab('history')">Activity History</button>
-                    <!-- <button class="tab-btn" onclick="switchTab('settings')">Settings</button> -->
+            <div class="hero-stat">
+                <div class="hero-stat-top">
+                    <span>History View</span>
+                    <i class="fas fa-clock-rotate-left"></i>
                 </div>
+                <h3>Timeline</h3>
+                <p>Review your previous college checks and guidance actions with better readability.</p>
+            </div>
+        </div>
+    </section>
 
-                <div id="historyTab">
-                    <h3>Your Journey</h3>
-                    <div id="historyList">
-                        <div class="placeholder-message">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <p>Loading your history...</p>
-                        </div>
+    <div class="profile-container fade-in-page">
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h2 id="profileName">Loading...</h2>
+            <p id="profileEmail">loading...</p>
+
+            <div class="profile-badges">
+                <div class="profile-badge">
+                    <i class="fas fa-star"></i>
+                    <span>Career Explorer</span>
+                </div>
+                <div class="profile-badge">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Guidance Activity Enabled</span>
+                </div>
+                <div class="profile-badge">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Student Dashboard</span>
+                </div>
+            </div>
+        </aside>
+
+        <section class="profile-content">
+            <div class="content-top">
+                <div class="content-title">
+                    <h3>My Activity</h3>
+                    <p>Explore your recent college checks and guidance-related actions.</p>
+                </div>
+                <div class="summary-chip">Journey Overview</div>
+            </div>
+
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('history')">Activity History</button>
+            </div>
+
+            <div id="historyTab" class="journey-card">
+                <h4>Your Journey</h4>
+                <p class="journey-sub">
+                    Here you can review your previous college eligibility checks and keep track of your exploration history.
+                </p>
+
+                <div id="historyList" class="history-list">
+                    <div class="placeholder-message">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading your history...</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </section>
+    </div>
+</main>
 
-    <script src="script.js"></script>
-    <script>
-        // Use user ID from localStorage
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user) {
-            window.location.href = 'login.html';
-        } else {
-            document.getElementById('profileName').textContent = user.full_name;
-            document.getElementById('profileEmail').textContent = user.email;
-            fetchHistory(user.user_id);
-        }
+<script src="script.js"></script>
 
-        function switchTab(tab) {
-            // Simple tab switch logic if extended
-        }
+<script>
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    root.setAttribute('data-theme', currentTheme);
 
-        async function fetchHistory(userId) {
-            try {
-                const response = await fetch(`http://127.0.0.1:5000/api/history/${userId}`);
-                const data = await response.json();
+    function updateThemeIcon() {
+        if (!themeToggle) return;
+        themeToggle.innerHTML = currentTheme === 'dark'
+            ? '<i class="fas fa-sun"></i>'
+            : '<i class="fas fa-moon"></i>';
+        themeToggle.setAttribute(
+            'aria-label',
+            currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+        );
+    }
 
-                const list = document.getElementById('historyList');
-                list.innerHTML = '';
+    updateThemeIcon();
 
-                if (data.history.length === 0) {
-                    list.innerHTML = '<p>No history found. Start exploring!</p>';
-                    return;
-                }
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', currentTheme);
+            updateThemeIcon();
+        });
+    }
 
-                data.history.forEach(item => {
-                    const details = item.details;
-                    const date = new Date(item.created_at).toLocaleDateString();
+    // Use user ID from localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        window.location.href = 'login.html';
+    } else {
+        document.getElementById('profileName').textContent = user.full_name;
+        document.getElementById('profileEmail').textContent = user.email;
+        fetchHistory(user.user_id);
+    }
 
-                    if (item.action_type === 'COLLEGE_CHECK') {
-                        list.innerHTML += `
-                            <div class="history-item">
-                                <div class="history-header">
-                                    <span class="tag tag-exam">${details.exam} Check</span>
-                                    <span style="color: #666; font-size: 0.9rem;">${date}</span>
-                                </div>
-                                <div>
-                                    <strong>Career:</strong> ${details.career} <br>
-                                    <strong>Details:</strong> ${details.percentile} Percentile (${details.category}) <br>
-                                    <strong>Result:</strong> Found ${details.colleges_found_count} eligible colleges
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
+    function switchTab(tab) {
+        // Reserved for future extension
+    }
 
-            } catch (error) {
-                console.error("Error loading history", error);
+    async function fetchHistory(userId) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/api/history/${userId}`);
+            const data = await response.json();
+
+            const list = document.getElementById('historyList');
+            list.innerHTML = '';
+
+            if (!data.history || data.history.length === 0) {
+                list.innerHTML = `
+                    <div class="placeholder-message">
+                        <i class="fas fa-folder-open"></i>
+                        <p>No history found yet. Start exploring colleges and your activity will appear here.</p>
+                    </div>
+                `;
+                return;
             }
+
+            data.history.forEach(item => {
+                const details = item.details || {};
+                const date = item.created_at ? new Date(item.created_at).toLocaleDateString() : 'N/A';
+
+                if (item.action_type === 'COLLEGE_CHECK') {
+                    list.innerHTML += `
+                        <div class="history-item">
+                            <div class="history-header">
+                                <div class="history-title-group">
+                                    <span class="tag tag-exam">
+                                        <i class="fas fa-file-medical"></i> ${details.exam || 'Exam'} Check
+                                    </span>
+                                </div>
+                                <span class="history-date">${date}</span>
+                            </div>
+                            <div class="history-body">
+                                <strong>Career:</strong> ${details.career || 'N/A'} <br>
+                                <strong>Details:</strong> ${details.percentile || 'N/A'} Percentile (${details.category || 'N/A'}) <br>
+                                <strong>Result:</strong> Found ${details.colleges_found_count || 0} eligible colleges
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    list.innerHTML += `
+                        <div class="history-item">
+                            <div class="history-header">
+                                <div class="history-title-group">
+                                    <span class="tag tag-career">
+                                        <i class="fas fa-briefcase"></i> ${item.action_type || 'Activity'}
+                                    </span>
+                                </div>
+                                <span class="history-date">${date}</span>
+                            </div>
+                            <div class="history-body">
+                                <strong>Details:</strong> ${JSON.stringify(details)}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+        } catch (error) {
+            console.error("Error loading history", error);
+            document.getElementById('historyList').innerHTML = `
+                <div class="placeholder-message">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <p>Unable to load history right now. Please try again later.</p>
+                </div>
+            `;
         }
-    </script>
+    }
+
+    const revealItems = document.querySelectorAll('.fade-in-page');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.12 });
+
+    revealItems.forEach(item => observer.observe(item));
+</script>
 </body>
 
 </html>

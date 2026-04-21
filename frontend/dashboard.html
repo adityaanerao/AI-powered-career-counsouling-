@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Career Guidance - Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #07111f;
+            --bg-2: #0c1728;
+            --panel: rgba(15, 24, 40, 0.88);
+            --panel-solid: #0f1828;
+            --panel-soft: #162338;
+            --card: #101b2d;
+            --card-2: #16243a;
+            --text: #f5f7fb;
+            --muted: #a8b3c7;
+            --soft: #d9e1f1;
+            --primary: #4f8cff;
+            --primary-2: #76a7ff;
+            --accent: #18c29c;
+            --accent-2: #35dbb8;
+            --line: rgba(255, 255, 255, 0.08);
+            --line-strong: rgba(255, 255, 255, 0.14);
+            --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.22);
+            --shadow-md: 0 22px 50px rgba(0, 0, 0, 0.32);
+            --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.42);
+            --radius-sm: 14px;
+            --radius-md: 22px;
+            --radius-lg: 32px;
+            --container: 1240px;
+            --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 12% 18%, rgba(79, 140, 255, 0.16), transparent 28%),
+                radial-gradient(circle at 88% 20%, rgba(24, 194, 156, 0.14), transparent 24%),
+                linear-gradient(135deg, #050d18 0%, #091426 38%, #07111f 100%);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.015)),
+                repeating-linear-gradient(90deg,
+                    transparent 0,
+                    transparent 90px,
+                    rgba(255, 255, 255, 0.015) 91px);
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 36px));
+            margin: 0 auto;
+        }
+
+        /* NAVBAR */
+        #navbar-container {
+            width: min(var(--container), calc(100% - 36px));
+            margin: 20px auto 18px;
+            padding: 14px 18px;
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(8, 17, 30, 0.82), rgba(8, 17, 30, 0.66));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+
+        #navbar-container *,
+        #navbar-container {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            color: #eaf1ff !important;
+        }
+
+        .nav-fixed-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            text-decoration: none !important;
+            font-weight: 600;
+            color: #dce7ff !important;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff !important;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(79, 140, 255, 0.18), rgba(79, 140, 255, 0.10));
+            border: 1px solid rgba(79, 140, 255, 0.22);
+            color: #ffffff !important;
+        }
+
+        .nav-select {
+            min-height: 42px;
+            padding: 0 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff !important;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .nav-user {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .nav-user a {
+            color: #8ab4ff !important;
+            text-decoration: none !important;
+            font-weight: 700;
+        }
+
+        .dashboard-shell {
+            padding: 10px 0 54px;
+        }
+
+        .top-toolbar {
+            width: min(var(--container), calc(100% - 36px));
+            margin: 0 auto 18px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-4px);
+            border-color: var(--line-strong);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .dashboard-intro {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) 380px;
+            gap: 28px;
+            min-height: 440px;
+            padding: 34px;
+            border-radius: 34px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+                linear-gradient(120deg, #101b2d 0%, #0d1728 45%, #12233a 100%);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-lg);
+            isolation: isolate;
+        }
+
+        .dashboard-intro::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            right: -120px;
+            top: -120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79, 140, 255, 0.18), transparent 65%);
+            z-index: -1;
+        }
+
+        .dashboard-intro::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            left: 36%;
+            bottom: -140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(24, 194, 156, 0.12), transparent 65%);
+            z-index: -1;
+        }
+
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 700px;
+        }
+
+        .intro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
+            padding: 10px 16px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: #dbe7ff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .dashboard-intro h1 {
+            font-size: clamp(2.7rem, 5.2vw, 4.8rem);
+            line-height: 0.98;
+            letter-spacing: -0.04em;
+            font-weight: 800;
+            max-width: 9ch;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+
+        .dashboard-intro h1 .accent-text {
+            color: #9ec2ff;
+        }
+
+        .dashboard-intro p {
+            max-width: 58ch;
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .hero-btn {
+            min-height: 52px;
+            padding: 13px 22px;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .hero-btn.primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 16px 34px rgba(79, 140, 255, 0.32);
+        }
+
+        .hero-btn.primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 42px rgba(79, 140, 255, 0.42);
+        }
+
+        .hero-btn.secondary {
+            color: var(--soft);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-btn.secondary:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .hero-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .stat-card {
+            padding: 22px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .stat-top span {
+            color: #dce6f8;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .stat-top i {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            line-height: 1.65;
+            font-size: 0.96rem;
+        }
+
+        .section {
+            margin-top: 28px;
+            padding: 28px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.025));
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .section-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .icon-wrap {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 14px 30px rgba(79, 140, 255, 0.2);
+        }
+
+        .section-header h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            font-size: 0.96rem;
+        }
+
+        .section-chip {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(79, 140, 255, 0.10);
+            color: #cfe0ff;
+            border: 1px solid rgba(79, 140, 255, 0.14);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .overview-card,
+        .tip-card,
+        .tool-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.03));
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .overview-card {
+            border-radius: 22px;
+            padding: 22px;
+            transition: var(--transition);
+        }
+
+        .overview-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .card-icon,
+        .tip-icon,
+        .tool-card i {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            color: white;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .bg-blue {
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        }
+
+        .bg-green {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        }
+
+        .bg-purple {
+            background: linear-gradient(135deg, #7b6dff, #a99fff);
+        }
+
+        .bg-orange {
+            background: linear-gradient(135deg, #ff9a44, #ffc16d);
+        }
+
+        .overview-card h3,
+        .tip-card h3,
+        .tool-card h3 {
+            color: #fff;
+            font-size: 1.08rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .overview-card p,
+        .tip-card p,
+        .tool-card p,
+        .tip-card li {
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .tips-grid,
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .tip-card {
+            border-radius: 24px;
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .tip-card ul {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .tip-card li {
+            position: relative;
+            padding-left: 18px;
+            font-size: 0.95rem;
+        }
+
+        .tip-card li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 11px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .tip-card strong {
+            color: #fff;
+        }
+
+        .tool-card {
+            text-decoration: none;
+            color: inherit;
+            border-radius: 24px;
+            padding: 24px;
+            min-height: 210px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .tool-card i {
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 16px 30px rgba(79, 140, 255, 0.22);
+        }
+
+        .tool-card:nth-child(2) i {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 16px 30px rgba(24, 194, 156, 0.22);
+        }
+
+        .tool-card span {
+            color: #d7e5ff;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer {
+            margin-top: 28px;
+            padding-bottom: 28px;
+        }
+
+        .footer .container {
+            padding: 18px 22px;
+            border-radius: 20px;
+            text-align: center;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--line);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1100px) {
+            .dashboard-intro {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .hero-copy {
+                max-width: 100%;
+            }
+
+            .overview-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-fixed-layout {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-right {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .container,
+            .top-toolbar,
+            #navbar-container {
+                width: min(var(--container), calc(100% - 20px));
+            }
+
+            .dashboard-shell {
+                padding-top: 14px;
+            }
+
+            .dashboard-intro {
+                padding: 22px;
+                border-radius: 24px;
+                gap: 20px;
+            }
+
+            .dashboard-intro h1 {
+                font-size: 2.4rem;
+                max-width: 100%;
+            }
+
+            .dashboard-intro p {
+                font-size: 1rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-btn {
+                width: 100%;
+            }
+
+            .overview-grid,
+            .tips-grid,
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .nav-link,
+            .nav-user,
+            .nav-select {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="navbar-container"></div>
+
+<div class="top-toolbar reveal">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+</div>
+
+<main class="container dashboard-shell">
+    <section class="dashboard-intro reveal">
+        <div class="hero-copy">
+            <div class="intro-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>AI-Powered Career Planning Dashboard</span>
+            </div>
+
+            <h1>
+                Welcome to <br>
+                Your <span class="accent-text">Career</span> <br>
+                Guidance Hub
+            </h1>
+
+            <p>
+                Explore your future with smarter recommendations, exam insights,
+                stream planning, and college guidance in one polished dashboard experience.
+            </p>
+
+            <div class="hero-actions">
+                <a href="career_preference.html" class="hero-btn primary">
+                    <i class="fas fa-brain"></i>
+                    Try Career Recommender
+                </a>
+
+                <a href="colleges_engineering.html" class="hero-btn secondary">
+                    <i class="fas fa-university"></i>
+                    Explore Colleges
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-panel">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Top Streams</span>
+                    <i class="fas fa-compass"></i>
+                </div>
+                <div class="stat-value">3+</div>
+                <div class="stat-label">Science, Commerce, and Arts pathways curated for students.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Exams Focus</span>
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value">JEE / NEET</div>
+                <div class="stat-label">Preparation strategy, speed, concepts, and smart practice methods.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Future Skills</span>
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="stat-value">AI • Cloud</div>
+                <div class="stat-label">Trending domains with strong demand and long-term career growth.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal">
+        <div class="section-header">
+            <div class="section-title-wrap">
+                <div class="icon-wrap">
+                    <i class="fas fa-grip"></i>
+                </div>
+                <div>
+                    <h2>Career Overview</h2>
+                    <p>Quick pathways to help you understand your options clearly.</p>
+                </div>
+            </div>
+            <div class="section-chip">Plan smart</div>
+        </div>
+
+        <div class="overview-grid">
+            <div class="overview-card">
+                <div class="card-icon bg-blue"><i class="fas fa-atom"></i></div>
+                <h3>Science Stream</h3>
+                <p>Best for engineering, medicine, research, architecture, and technical careers.</p>
+            </div>
+
+            <div class="overview-card">
+                <div class="card-icon bg-green"><i class="fas fa-chart-pie"></i></div>
+                <h3>Commerce Stream</h3>
+                <p>Strong path for CA, finance, banking, business, economics, and management roles.</p>
+            </div>
+
+            <div class="overview-card">
+                <div class="card-icon bg-purple"><i class="fas fa-scale-balanced"></i></div>
+                <h3>Arts Stream</h3>
+                <p>Ideal for law, UPSC, design, psychology, media, and social science careers.</p>
+            </div>
+
+            <div class="overview-card">
+                <div class="card-icon bg-orange"><i class="fas fa-rocket"></i></div>
+                <h3>Future Careers</h3>
+                <p>Explore emerging options like AI, cyber security, cloud, biotech, and analytics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal">
+        <div class="section-header">
+            <div class="section-title-wrap">
+                <div class="icon-wrap">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h2>Career Guidance Tips & Insights</h2>
+                    <p>Practical guidance for streams, exams, emerging careers, and medical options.</p>
+                </div>
+            </div>
+            <div class="section-chip">Student guidance</div>
+        </div>
+
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-icon bg-blue"><i class="fas fa-road"></i></div>
+                <h3>Choosing the Right Stream</h3>
+                <p>After 10th, your stream choice shapes your long-term academic and career direction.</p>
+                <ul>
+                    <li><strong>Science (PCM/PCB):</strong> Gateway to Engineering, Medicine, Research, and Architecture.</li>
+                    <li><strong>Commerce:</strong> Ideal for CA, CS, MBA, Banking, and Finance careers.</li>
+                    <li><strong>Arts:</strong> Pathway to UPSC, Law, Design, Psychology, and Media.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon bg-green"><i class="fas fa-clipboard-check"></i></div>
+                <h3>Entrance Exam Strategy</h3>
+                <p>Success needs consistent revision, mock practice, and concept clarity from an early stage.</p>
+                <ul>
+                    <li><strong>Starting Early:</strong> Begin foundation preparation from 11th grade.</li>
+                    <li><strong>Mock Tests:</strong> Solve previous year papers to understand patterns.</li>
+                    <li><strong>Focus Areas:</strong> JEE needs conceptual depth; MHT-CET needs speed and accuracy.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon bg-purple"><i class="fas fa-laptop-code"></i></div>
+                <h3>Emerging Tech Careers</h3>
+                <p>Technology careers now extend beyond coding into advanced digital and data-focused fields.</p>
+                <ul>
+                    <li><strong>AI & Data Science:</strong> High-growth field with Math and Statistics foundation.</li>
+                    <li><strong>Cyber Security:</strong> Critical for protecting systems, networks, and digital assets.</li>
+                    <li><strong>Cloud Computing:</strong> AWS and Azure skills remain highly valuable in industry.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon bg-orange"><i class="fas fa-user-doctor"></i></div>
+                <h3>Medical & Allied Fields</h3>
+                <p>There are valuable healthcare options beyond just MBBS, depending on rank and interest.</p>
+                <ul>
+                    <li><strong>MBBS/BDS:</strong> Usually requires strong NEET performance and ranks.</li>
+                    <li><strong>BAMS/BHMS:</strong> Alternative medicine fields with growing interest.</li>
+                    <li><strong>Pharmacy/Biotech:</strong> Good paths for research, labs, and industry roles.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal">
+        <div class="section-header">
+            <div class="section-title-wrap">
+                <div class="icon-wrap">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div>
+                    <h2>Tools & Resources</h2>
+                    <p>Move from guidance to action using these core modules.</p>
+                </div>
+            </div>
+            <div class="section-chip">Quick access</div>
+        </div>
+
+        <div class="tools-grid">
+            <a href="career_preference.html" class="tool-card">
+                <div>
+                    <i class="fas fa-brain"></i>
+                    <h3>AI Career Recommender</h3>
+                    <p>Get recommendations based on interests, strengths, and future goals.</p>
+                </div>
+                <span>Find your path <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <a href="colleges_engineering.html" class="tool-card">
+                <div>
+                    <i class="fas fa-university"></i>
+                    <h3>College Search</h3>
+                    <p>Check college options, eligibility, and useful admission guidance in one place.</p>
+                </div>
+                <span>Explore colleges <i class="fas fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer class="footer reveal">
+    <div class="container">
+        <p>AI Career & CET Admission Guidance System &copy; 2026</p>
+    </div>
+</footer>
+
+<script src="components/navbar.js"></script>
+<script src="script.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.getElementById("navbar-container");
+
+        if (navbar) {
+            navbar.innerHTML = `
+                <div class="nav-fixed-layout">
+                    <a href="dashboard.html" class="nav-brand">
+                        <i class="fas fa-briefcase"></i>
+                        CareerAI
+                    </a>
+
+                    <div class="nav-right">
+                        <a href="dashboard.html" class="nav-link active">Home</a>
+                        <a href="career_preference.html" class="nav-link">Career Preference</a>
+                        <a href="colleges_engineering.html" class="nav-link">Engineering</a>
+                        <a href="colleges_medical.html" class="nav-link">Medical</a>
+                        <a href="colleges_high_school.html" class="nav-link">11th/12th</a>
+
+                        <select class="nav-select">
+                            <option>Colleges</option>
+                            <option>Engineering</option>
+                            <option>Medical</option>
+                        </select>
+
+                        <div class="nav-user">
+                            <span>Hello,</span>
+                            <a href="profile.html">My Profile</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function () {
+                document.documentElement.setAttribute(
+                    'data-theme',
+                    document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+                );
+                this.innerHTML = document.documentElement.getAttribute('data-theme') === 'dark'
+                    ? '<i class="fas fa-sun"></i>'
+                    : '<i class="fas fa-moon"></i>';
+            });
+        }
+
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach(el => observer.observe(el));
+    });
+</script>
+</body>
+
+</html>

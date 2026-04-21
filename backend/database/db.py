@@ -9,7 +9,7 @@ db_pool = mysql.connector.pooling.MySQLConnectionPool(
     host="localhost",
     user="root",
     password="Aditya",
-    database="career_guidance_db"
+    database="career_guidence_db"
 )
 
 def get_db_connection():
@@ -24,5 +24,5 @@ def get_db_connection():
             host="localhost",
             user="root",
             password="Aditya",
-            database="career_guidance_db"
+            database="career_guidence_db"
         )
