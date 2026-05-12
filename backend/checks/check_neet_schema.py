@@ -1,5 +1,5 @@
 import sys
-sys.path.append('.')
+sys.path.append('..')
 from database.db import get_db_connection
 
 conn = get_db_connection()

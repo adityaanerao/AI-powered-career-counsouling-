@@ -19,4 +19,4 @@ class SemanticMatcher:
         # sort by similarity (descending)
         results.sort(key=lambda x: x[1], reverse=True)
 
-        return results[:3]  # top 3 careers
+        return results  # return all matches, let backend decide how many to show

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
 
     <style>
         :root {
@@ -33,16 +34,25 @@
             --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background:
-                radial-gradient(circle at 0% 10%, rgba(35, 75, 255, 0.18), transparent 30%),
-                radial-gradient(circle at 100% 90%, rgba(0, 184, 148, 0.12), transparent 24%),
-                linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+       body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(5, 10, 20, 0.82),
+            rgba(5, 10, 20, 0.88)
+        ),
+        url("assets/images/img.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
 
         .container {
             width: min(1200px, calc(100% - 32px));

@@ -147,6 +147,8 @@ function updateFormForExamType() {
     if (percentileText) {
         if (examType === "SSC") {
             percentileText.textContent = "10th Percentage";
+        } else if (examType === "HSC") {
+            percentileText.textContent = "12th Percentage";
         } else if (["CAT", "GATE", "MCA-CET", "CET-PG"].includes(examType)) {
             percentileText.textContent = "Exam Score/Percentile";
         } else {
@@ -170,7 +172,7 @@ function updateFormForExamType() {
             if (universitySelect && universitySelect.parentElement) {
                 universitySelect.parentElement.style.display = 'none';
             }
-        } else if (examType === "SSC") {
+        } else if (examType === "SSC" || examType === "HSC") {
             // Junior College
             options = [
                 { value: "Science", label: "Science Stream" },
@@ -429,7 +431,7 @@ async function checkColleges() {
     // Get career from AI card
     const careerElement = document.querySelector(".career-card h3");
     let career = selectedBranch ? selectedBranch :
-                 (examType === "NEET" ? "MBBS" : "Computer Engineering");
+        (examType === "NEET" ? "MBBS" : "Computer Engineering");
 
     if (careerElement) {
         // Remove emojis / symbols safely
@@ -638,6 +640,26 @@ function showDemoCareerData() {
                     "Problem-solving skills are crucial for identifying security vulnerabilities",
                     "Technology interest aligns with cybersecurity tools and techniques",
                     "Analytical thinking helps in threat detection and analysis"
+                ]
+            },
+            {
+                career: "Product Manager",
+                description: "Lead product development from conception to launch, working with engineering, design, and marketing teams to deliver successful products.",
+                suitability_score: 70,
+                explanation: [
+                    "Your problem-solving skills help in prioritizing features and roadmaps",
+                    "Interest in technology aligns with product management in tech companies",
+                    "Communication skills are essential for coordinating across teams"
+                ]
+            },
+            {
+                career: "Digital Marketing Specialist",
+                description: "Plan and execute online marketing campaigns using SEO, social media, email, and content marketing to drive brand awareness and sales.",
+                suitability_score: 60,
+                explanation: [
+                    "Creative thinking matches content creation and campaign design",
+                    "Analytical skills help in measuring campaign performance",
+                    "Interest in technology aligns with digital tools and platforms"
                 ]
             }
         ]

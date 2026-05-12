@@ -75,16 +75,24 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            color: var(--text);
-            background:
-                radial-gradient(circle at top left, rgba(23, 105, 255, 0.14), transparent 24%),
-                radial-gradient(circle at top right, rgba(0, 184, 148, 0.12), transparent 24%),
-                linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
-            transition: var(--transition);
-            overflow-x: hidden;
-        }
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(5, 10, 20, 0.82),
+            rgba(5, 10, 20, 0.88)
+        ),
+        url("assets/images/img.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
 
         body::before,
         body::after {
@@ -267,6 +275,7 @@
             justify-content: space-between;
             margin-bottom: 12px;
             color: rgba(255, 255, 255, 0.92);
+            text-color: black;
         }
 
         .hero-mini-top i {
@@ -756,6 +765,30 @@
                 width: 100%;
             }
         }
+        /* Fix dropdown option text color */
+select {
+    color: var(--text);
+    background-color: var(--surface-strong);
+}
+
+/* Dropdown list options */
+select option {
+    color: #000;              /* normal visible text */
+    background-color: #fff;  /* white background */
+}
+
+/* Dark mode fix */
+[data-theme="dark"] select option {
+    color: #fff;              /* white text */
+    background-color: #162238; /* dark background */
+}
+
+/* Highlight selected/hover option (optional improvement) */
+select option:checked,
+select option:hover {
+    background-color: var(--primary);
+    color: #fff;
+}
     </style>
 </head>
 

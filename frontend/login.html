@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
 
     <style>
         :root {
@@ -429,7 +429,7 @@
             transition: var(--transition);
         }
 
-        .form-group input:focus + .input-icon {
+        .form-group input:focus+.input-icon {
             color: var(--primary);
         }
 
@@ -560,7 +560,9 @@
         }
 
         @keyframes floatSoft {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0);
             }
 
@@ -651,198 +653,602 @@
 </head>
 
 <body>
-<header class="header fade-in-page">
-    <div class="container header-inner">
-        <div class="logo">
-            <div class="logo-mark float-soft">
-                <i class="fas fa-robot"></i>
+    <header class="header fade-in-page">
+        <div class="container header-inner">
+            <div class="logo">
+                <div class="logo-mark float-soft">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="logo-text">
+                    <h1><a href="dashboard.html">AI Career Guidance</a></h1>
+                    <p>Smart guidance for careers, colleges, and future planning</p>
+                </div>
             </div>
-            <div class="logo-text">
-                <h1><a href="dashboard.html">AI Career Guidance</a></h1>
-                <p>Smart guidance for careers, colleges, and future planning</p>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container login-shell">
+        <div class="login-layout">
+            <section class="login-showcase fade-in-page">
+                <div>
+                    <div class="showcase-badge">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>Secure Student Login Portal</span>
+                    </div>
+
+                    <h2>Welcome back to your career planning space</h2>
+                    <p>
+                        Access your personalized dashboard, explore career recommendations,
+                        compare college options, and continue your academic planning journey
+                        through a polished and student-friendly platform.
+                    </p>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <strong>AI Career Suggestions</strong>
+                                <p>Discover suitable paths based on your interests and goals.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fas fa-university"></i>
+                            <div>
+                                <strong>College Guidance</strong>
+                                <p>Search and compare colleges using smarter filtering tools.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <strong>Track Your Progress</strong>
+                                <p>Use one place for exam planning, stream guidance, and career clarity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <h3>24/7</h3>
+                        <p>Access your account and guidance tools anytime.</p>
+                    </div>
+                    <div class="mini-stat">
+                        <h3>Smart</h3>
+                        <p>Modern dashboard experience with better usability.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="login-card fade-in-page">
+                <div class="login-card-inner">
+                    <div class="auth-chip">
+                        <i class="fas fa-user-lock"></i>
+                        <span>Account Login</span>
+                    </div>
+
+                    <h2 class="login-title">Login</h2>
+                    <p class="login-subtitle">
+                        Enter your email and password to continue to your dashboard.
+                    </p>
+
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <div class="input-wrap">
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                            <i class="fas fa-envelope input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Password</label>
+                        <div class="input-wrap">
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="password-toggle" id="passwordToggle"
+                                aria-label="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-meta">
+                        <label class="remember-me">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link" onclick="showForgotPasswordModal()">Forgot password?</a>
+                    </div>
+
+                    <button class="btn-primary" onclick="loginUser()">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+
+                    <div class="divider">New here?</div>
+
+                    <p class="register-text">
+                        Don’t have an account?
+                        <a href="register.html">Register here</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+
+    <script>
+        if (checkLoginState()) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reset Your Password</h3>
+                <button class="modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="forgotStep1">
+                    <p>Enter your email address and we'll send you a verification code.</p>
+                    <div class="form-group">
+                        <label for="resetEmail">Email Address</label>
+                        <input type="email" id="resetEmail" placeholder="you@example.com" required>
+                    </div>
+                    <button class="btn-primary" onclick="sendResetOTP()">Send Verification Code</button>
+                </div>
+
+                <div id="forgotStep2" style="display: none;">
+                    <p>Enter the 6-digit verification code sent to your email.</p>
+                    <div class="form-group">
+                        <label for="otpCode">Verification Code</label>
+                        <input type="text" id="otpCode" placeholder="123456" maxlength="6" required>
+                    </div>
+                    <button class="btn-primary" onclick="verifyOTP()">Verify Code</button>
+                    <p class="resend-text">Didn't receive the code? <a href="#" onclick="resendOTP()">Resend</a></p>
+                </div>
+
+                <div id="forgotStep3" style="display: none;">
+                    <p>Create a new password for your account.</p>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" placeholder="Enter new password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+                    </div>
+                    <button class="btn-primary" onclick="resetPassword()">Reset Password</button>
+                </div>
+
+                <div id="forgotSuccess" style="display: none; text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: var(--accent); margin-bottom: 20px;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Password Reset Successful!</h3>
+                    <p>Your password has been reset successfully. You can now login with your new password.</p>
+                    <button class="btn-primary" onclick="closeForgotPasswordModal()">Back to Login</button>
+                </div>
+
+                <div id="forgotError"
+                    style="display: none; color: var(--danger); text-align: center; padding: 10px; background: rgba(255, 107, 107, 0.1); border-radius: 8px; margin-top: 15px;">
+                    <p id="errorMessage"></p>
+                </div>
             </div>
         </div>
-
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <i class="fas fa-moon"></i>
-        </button>
     </div>
-</header>
 
-<main class="container login-shell">
-    <div class="login-layout">
-        <section class="login-showcase fade-in-page">
-            <div>
-                <div class="showcase-badge">
-                    <i class="fas fa-shield-halved"></i>
-                    <span>Secure Student Login Portal</span>
-                </div>
-
-                <h2>Welcome back to your career planning space</h2>
-                <p>
-                    Access your personalized dashboard, explore career recommendations,
-                    compare college options, and continue your academic planning journey
-                    through a polished and student-friendly platform.
-                </p>
-
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <i class="fas fa-brain"></i>
-                        <div>
-                            <strong>AI Career Suggestions</strong>
-                            <p>Discover suitable paths based on your interests and goals.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <i class="fas fa-university"></i>
-                        <div>
-                            <strong>College Guidance</strong>
-                            <p>Search and compare colleges using smarter filtering tools.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <i class="fas fa-chart-line"></i>
-                        <div>
-                            <strong>Track Your Progress</strong>
-                            <p>Use one place for exam planning, stream guidance, and career clarity.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mini-stats">
-                <div class="mini-stat">
-                    <h3>24/7</h3>
-                    <p>Access your account and guidance tools anytime.</p>
-                </div>
-                <div class="mini-stat">
-                    <h3>Smart</h3>
-                    <p>Modern dashboard experience with better usability.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="login-card fade-in-page">
-            <div class="login-card-inner">
-                <div class="auth-chip">
-                    <i class="fas fa-user-lock"></i>
-                    <span>Account Login</span>
-                </div>
-
-                <h2 class="login-title">Login</h2>
-                <p class="login-subtitle">
-                    Enter your email and password to continue to your dashboard.
-                </p>
-
-                <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                    <div class="input-wrap">
-                        <input type="email" id="email" placeholder="Enter your email" required>
-                        <i class="fas fa-envelope input-icon"></i>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password"><i class="fas fa-lock"></i> Password</label>
-                    <div class="input-wrap">
-                        <input type="password" id="password" placeholder="Enter your password" required>
-                        <i class="fas fa-lock input-icon"></i>
-                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-meta">
-                    <label class="remember-me">
-                        <input type="checkbox">
-                        <span>Remember me</span>
-                    </label>
-                    <a href="#" class="forgot-link">Forgot password?</a>
-                </div>
-
-                <button class="btn-primary" onclick="loginUser()">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-
-                <div class="divider">New here?</div>
-
-                <p class="register-text">
-                    Don’t have an account?
-                    <a href="register.html">Register here</a>
-                </p>
-            </div>
-        </section>
-    </div>
-</main>
-
-<script src="script.js"></script>
-
-<script>
-    if (checkLoginState()) {
-        window.location.href = 'dashboard.html';
-    }
-</script>
-
-<script>
-    (function () {
-        const root = document.documentElement;
-        const themeToggle = document.getElementById('themeToggle');
-        const passwordInput = document.getElementById('password');
-        const passwordToggle = document.getElementById('passwordToggle');
-
-        let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        root.setAttribute('data-theme', currentTheme);
-
-        function updateThemeIcon() {
-            if (!themeToggle) return;
-            themeToggle.innerHTML = currentTheme === 'dark'
-                ? '<i class="fas fa-sun"></i>'
-                : '<i class="fas fa-moon"></i>';
-            themeToggle.setAttribute(
-                'aria-label',
-                currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-            );
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        updateThemeIcon();
-
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function () {
-                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                root.setAttribute('data-theme', currentTheme);
-                updateThemeIcon();
-            });
+        .modal-content {
+            background: var(--surface-strong);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
         }
 
-        if (passwordToggle && passwordInput) {
-            passwordToggle.addEventListener('click', function () {
-                const isPassword = passwordInput.type === 'password';
-                passwordInput.type = isPassword ? 'text' : 'password';
-                passwordToggle.innerHTML = isPassword
-                    ? '<i class="fas fa-eye-slash"></i>'
-                    : '<i class="fas fa-eye"></i>';
-                passwordToggle.setAttribute(
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--bg-secondary);
+            color: var(--text);
+        }
+
+        .modal-body {
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(23, 105, 255, 0.1);
+        }
+
+        .resend-text {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .resend-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .resend-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script>
+        (function () {
+            const root = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+
+            let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            root.setAttribute('data-theme', currentTheme);
+
+            function updateThemeIcon() {
+                if (!themeToggle) return;
+                themeToggle.innerHTML = currentTheme === 'dark'
+                    ? '<i class="fas fa-sun"></i>'
+                    : '<i class="fas fa-moon"></i>';
+                themeToggle.setAttribute(
                     'aria-label',
-                    isPassword ? 'Hide password' : 'Show password'
+                    currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
                 );
-            });
+            }
+
+            updateThemeIcon();
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function () {
+                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    root.setAttribute('data-theme', currentTheme);
+                    updateThemeIcon();
+                });
+            }
+
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', function () {
+                    const isPassword = passwordInput.type === 'password';
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    passwordToggle.innerHTML = isPassword
+                        ? '<i class="fas fa-eye-slash"></i>'
+                        : '<i class="fas fa-eye"></i>';
+                    passwordToggle.setAttribute(
+                        'aria-label',
+                        isPassword ? 'Hide password' : 'Show password'
+                    );
+                });
+            }
+
+            const revealItems = document.querySelectorAll('.fade-in-page');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealItems.forEach(item => observer.observe(item));
+        })();
+
+        // Forgot Password Functions
+        let resetEmail = '';
+        let resetToken = '';
+
+        function showForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'flex';
+            resetEmail = '';
+            resetToken = '';
+            showStep(1);
+            hideError();
         }
 
-        const revealItems = document.querySelectorAll('.fade-in-page');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+        }
 
-        revealItems.forEach(item => observer.observe(item));
-    })();
-</script>
+        function showStep(step) {
+            // Hide all steps
+            document.getElementById('forgotStep1').style.display = 'none';
+            document.getElementById('forgotStep2').style.display = 'none';
+            document.getElementById('forgotStep3').style.display = 'none';
+            document.getElementById('forgotSuccess').style.display = 'none';
+
+            // Show selected step
+            if (step === 1) {
+                document.getElementById('forgotStep1').style.display = 'block';
+            } else if (step === 2) {
+                document.getElementById('forgotStep2').style.display = 'block';
+            } else if (step === 3) {
+                document.getElementById('forgotStep3').style.display = 'block';
+            } else if (step === 'success') {
+                document.getElementById('forgotSuccess').style.display = 'block';
+            }
+        }
+
+        function hideError() {
+            document.getElementById('forgotError').style.display = 'none';
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('forgotError').style.display = 'block';
+        }
+
+        function sendResetOTP() {
+            const email = document.getElementById('resetEmail').value.trim();
+
+            if (!email) {
+                showError('Please enter your email address');
+                return;
+            }
+
+            resetEmail = email;
+
+            // Show loading state
+            const btn = document.querySelector('#forgotStep1 button');
+            const originalText = btn.textContent;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            // Call API
+            fetch('http://localhost:5000/api/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+
+                    if (data.error) {
+                        showError(data.error);
+                    } else {
+                        // Move to step 2
+                        showStep(2);
+                        hideError();
+                    }
+                })
+                .catch(error => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    showError('Network error. Please try again.');
+                });
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById('otpCode').value.trim();
+
+            if (!otp || otp.length !== 6) {
+                showError('Please enter a valid 6-digit code');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.querySelector('#forgotStep2 button');
+            const originalText = btn.textContent;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            btn.disabled = true;
+
+            // Call API
+            fetch('http://localhost:5000/api/verify-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: resetEmail,
+                    otp: otp
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+
+                    if (data.error) {
+                        showError(data.error);
+                    } else {
+                        resetToken = data.reset_token;
+                        // Move to step 3
+                        showStep(3);
+                        hideError();
+                    }
+                })
+                .catch(error => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    showError('Network error. Please try again.');
+                });
+        }
+
+        function resendOTP() {
+            if (!resetEmail) {
+                showError('Email is required');
+                return;
+            }
+
+            // Call API to resend OTP
+            fetch('http://localhost:5000/api/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: resetEmail })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showError(data.error);
+                    } else {
+                        // Show success message
+                        const errorDiv = document.getElementById('forgotError');
+                        errorDiv.style.display = 'block';
+                        errorDiv.style.color = 'var(--accent)';
+                        errorDiv.style.background = 'rgba(0, 184, 148, 0.1)';
+                        document.getElementById('errorMessage').textContent = 'New verification code sent to your email.';
+
+                        // Reset after 3 seconds
+                        setTimeout(() => {
+                            errorDiv.style.display = 'none';
+                        }, 3000);
+                    }
+                })
+                .catch(error => {
+                    showError('Failed to resend code. Please try again.');
+                });
+        }
+
+        function resetPassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!newPassword || !confirmPassword) {
+                showError('Please fill in both password fields');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showError('Password must be at least 6 characters');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.querySelector('#forgotStep3 button');
+            const originalText = btn.textContent;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting...';
+            btn.disabled = true;
+
+            // Call API
+            fetch('http://localhost:5000/api/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: resetEmail,
+                    reset_token: resetToken,
+                    new_password: newPassword
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+
+                    if (data.error) {
+                        showError(data.error);
+                    } else {
+                        // Show success
+                        showStep('success');
+                        hideError();
+                    }
+                })
+                .catch(error => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    showError('Network error. Please try again.');
+                });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('forgotPasswordModal');
+            if (event.target === modal) {
+                closeForgotPasswordModal();
+            }
+        };
+    </script>
 </body>
 
 </html>

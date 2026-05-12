@@ -71,16 +71,24 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background:
-                radial-gradient(circle at top left, rgba(23, 105, 255, 0.14), transparent 28%),
-                radial-gradient(circle at top right, rgba(0, 184, 148, 0.12), transparent 25%),
-                linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: var(--transition);
-        }
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(5, 10, 20, 0.82),
+            rgba(5, 10, 20, 0.88)
+        ),
+        url("assets/images/img.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
 
         body::before,
         body::after {
@@ -1003,6 +1011,33 @@
                 font-size: 0.92rem;
             }
         }
+
+        /* ===== UNIVERSAL DROPDOWN FIX ===== */
+
+/* Select box */
+.form-group select {
+    background: var(--surface-strong);
+    color: var(--text);
+}
+
+/* Dropdown options */
+.form-group select option {
+    color: #000;
+    background-color: #fff;
+}
+
+/* Dark mode options */
+[data-theme="dark"] .form-group select option {
+    color: #fff;
+    background-color: #16233a;
+}
+
+/* Selected / hover */
+.form-group select option:checked,
+.form-group select option:hover {
+    background-color: var(--primary);
+    color: #fff;
+}
     </style>
 </head>
 

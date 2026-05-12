@@ -1,5 +1,5 @@
 import sys
-sys.path.append('.')
+sys.path.append('..')
 from services.neet_eligibility_service import get_eligible_colleges_neet
 
 print("Testing NEET service fix...")

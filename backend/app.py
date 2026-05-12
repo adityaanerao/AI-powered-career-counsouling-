@@ -10,8 +10,9 @@ from services.neet_eligibility_service import get_eligible_colleges_neet
 from services.neet_eligibility_service import get_eligible_colleges_neet
 from services.jee_eligibility_service import get_eligible_colleges_jee
 from services.user_service import (
-    register_user, authenticate_user, get_user_profile, 
-    update_user_profile, log_user_history, get_user_history, get_analytics_data
+    register_user, authenticate_user, get_user_profile,
+    update_user_profile, log_user_history, get_user_history, get_analytics_data,
+    initiate_password_reset, verify_otp, reset_password
 )
 
 app = Flask(__name__)
@@ -42,6 +43,54 @@ def login():
     result = authenticate_user(data.get("email"), data.get("password"))
     if "error" in result:
         return jsonify(result), 401
+    return jsonify(result)
+
+@app.route("/api/forgot-password", methods=["POST"])
+def forgot_password():
+    """Initiate password reset by sending OTP to email."""
+    data = request.json
+    email = data.get("email")
+    
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+    
+    result = initiate_password_reset(email)
+    if "error" in result:
+        return jsonify(result), 400
+    return jsonify(result)
+
+@app.route("/api/verify-otp", methods=["POST"])
+def verify_otp_route():
+    """Verify OTP for password reset."""
+    data = request.json
+    email = data.get("email")
+    otp_code = data.get("otp")
+    
+    if not email or not otp_code:
+        return jsonify({"error": "Email and OTP are required"}), 400
+    
+    result = verify_otp(email, otp_code)
+    if "error" in result:
+        return jsonify(result), 400
+    return jsonify(result)
+
+@app.route("/api/reset-password", methods=["POST"])
+def reset_password_route():
+    """Reset password with valid reset token."""
+    data = request.json
+    email = data.get("email")
+    reset_token = data.get("reset_token")
+    new_password = data.get("new_password")
+    
+    if not email or not reset_token or not new_password:
+        return jsonify({"error": "Email, reset token, and new password are required"}), 400
+    
+    if len(new_password) < 6:
+        return jsonify({"error": "Password must be at least 6 characters"}), 400
+    
+    result = reset_password(email, reset_token, new_password)
+    if "error" in result:
+        return jsonify(result), 400
     return jsonify(result)
 
 @app.route("/api/profile/<int:user_id>", methods=["GET", "POST"])
@@ -282,15 +331,15 @@ def recommend_careers():
         # Sort by Hybrid Score
         final_results.sort(key=lambda x: x['hybrid_score'], reverse=True)
         
-        # D. Diversity Control (Max 3 per category)
+        # D. Diversity Control (Max 4 per category)
         diverse_results = []
         cat_counts = {}
         for res in final_results:
             cat = res['category']
-            if cat_counts.get(cat, 0) < 3:
+            if cat_counts.get(cat, 0) < 4:
                 diverse_results.append(res)
                 cat_counts[cat] = cat_counts.get(cat, 0) + 1
-            if len(diverse_results) >= 6: # Limit total results
+            if len(diverse_results) >= 8: # Limit total results
                 break
                 
         return jsonify({

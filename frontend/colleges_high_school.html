@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" data-theme="light">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +8,8 @@
     <link rel="stylesheet" href="dashboard-style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
 
     <style>
         :root {
@@ -71,16 +73,24 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-            color: var(--text);
-            background:
-                radial-gradient(circle at top left, rgba(23, 105, 255, 0.14), transparent 25%),
-                radial-gradient(circle at bottom right, rgba(0, 184, 148, 0.12), transparent 25%),
-                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-            overflow-x: hidden;
-            transition: var(--transition);
-        }
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(5, 10, 20, 0.82),
+            rgba(5, 10, 20, 0.88)
+        ),
+        url("assets/images/img.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
 
         body::before,
         body::after {
@@ -621,8 +631,15 @@
         }
 
         @keyframes floatUp {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         @media (max-width: 1100px) {
@@ -699,9 +716,10 @@
                 border-radius: 20px;
             }
         }
-        
+
 
         @media (prefers-reduced-motion: reduce) {
+
             *,
             *::before,
             *::after {
@@ -711,252 +729,286 @@
                 scroll-behavior: auto !important;
             }
         }
+
+        /* ===== FIX DROPDOWN TEXT VISIBILITY ===== */
+
+        /* Select box */
+        .form-group select {
+            background: var(--surface-strong);
+            color: var(--text);
+        }
+
+        /* Dropdown options (important) */
+        .form-group select option {
+            color: #000;
+            background-color: #fff;
+        }
+
+        /* Dark mode fix */
+        [data-theme="dark"] .form-group select option {
+            color: #fff;
+            background-color: #162238;
+        }
+
+        /* Selected / hover option */
+        .form-group select option:checked,
+        .form-group select option:hover {
+            background-color: var(--primary);
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
-<div id="navbar-container"></div>
+    <div id="navbar-container"></div>
 
-<main class="container dashboard-shell">
-    <div class="top-toolbar fade-in">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <i class="fas fa-moon"></i>
-        </button>
-    </div>
-
-    <section class="section cet-section fade-in">
-        <div class="dashboard-intro slide-up">
-            <div class="hero-copy">
-                <div class="intro-badge">
-                    <i class="fas fa-school"></i>
-                    <span>Junior College Admission Guidance</span>
-                </div>
-
-                <h1>Plan your <span class="accent-text">11th &amp; 12th</span> admission with confidence</h1>
-
-                <p>
-                    Check eligible junior colleges, compare streams, and get a cleaner admission experience
-                    with a modern interface built for students and parents.
-                </p>
-
-                <div class="hero-actions">
-                    <a href="#collegeResults" class="hero-btn primary">
-                        <i class="fas fa-search"></i>
-                        <span>Find Colleges</span>
-                    </a>
-
-                    <a href="https://11thadmission.org.in" target="_blank" rel="noopener noreferrer" class="hero-btn secondary">
-                        <i class="fas fa-up-right-from-square"></i>
-                        <span>Official Portal</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="hero-panel">
-                <div class="stat-card float-up">
-                    <div class="stat-top">
-                        <span>Admission Focus</span>
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="stat-value">SSC → FYJC</div>
-                    <div class="stat-label">Junior college search based on marks, category, city, and stream.</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-top">
-                        <span>Supported Streams</span>
-                        <i class="fas fa-stream"></i>
-                    </div>
-                    <div class="stat-value">3</div>
-                    <div class="stat-label">Science, Commerce, and Arts options available for selection.</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-header">
-            <div class="section-title-wrap">
-                <div class="icon-wrap">
-                    <i class="fas fa-filter"></i>
-                </div>
-                <div>
-                    <h2>Search Junior Colleges</h2>
-                    <p>Enter your details to find eligible colleges based on admission criteria.</p>
-                </div>
-            </div>
-            <div class="section-chip">Quick search</div>
-        </div>
-
-        <div class="form-card slide-up">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="exam">
-                        <i class="fas fa-file-alt"></i>
-                        Qualification
-                    </label>
-                    <select id="exam" onchange="updateFormForExamType()">
-                        <option value="SSC" selected>10th Std (SSC)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="exam-percentile" id="percentile-label">
-                        <i class="fas fa-percentage"></i>
-                        <span id="percentile-text">10th Percentage</span>
-                    </label>
-                    <input type="number" id="exam-percentile" step="0.01" placeholder="e.g. 85.50" required />
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="category">
-                        <i class="fas fa-users"></i>
-                        Category
-                    </label>
-                    <select id="category">
-                        <option value="OPEN">OPEN</option>
-                        <option value="OBC">OBC</option>
-                        <option value="SC">SC</option>
-                        <option value="ST">ST</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="city">
-                        <i class="fas fa-city"></i>
-                        City
-                    </label>
-                    <select id="city">
-                        <option value="">All Cities</option>
-                        <option value="Pune">Pune</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Nagpur">Nagpur</option>
-                        <option value="Nashik">Nashik</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="branch">
-                        <i class="fas fa-stream"></i>
-                        Stream
-                    </label>
-                    <select id="branch">
-                        <option value="Science">Science Stream</option>
-                        <option value="Commerce">Commerce Stream</option>
-                        <option value="Arts">Arts Stream</option>
-                    </select>
-                </div>
-
-                <div class="form-group" style="display:none;">
-                    <select id="university">
-                        <option value="">All</option>
-                    </select>
-                </div>
-            </div>
-
-            <button class="btn-secondary" onclick="checkColleges()">
-                <i class="fas fa-search"></i>
-                <span>Check Junior Colleges</span>
+    <main class="container dashboard-shell">
+        <div class="top-toolbar fade-in">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
             </button>
         </div>
 
-        <div class="section-header results-header">
-            <div class="section-title-wrap">
-                <div class="icon-wrap">
-                    <i class="fas fa-list-ol"></i>
+        <section class="section cet-section fade-in">
+            <div class="dashboard-intro slide-up">
+                <div class="hero-copy">
+                    <div class="intro-badge">
+                        <i class="fas fa-school"></i>
+                        <span>Junior College Admission Guidance</span>
+                    </div>
+
+                    <h1>Plan your <span class="accent-text">11th &amp; 12th</span> admission with confidence</h1>
+
+                    <p>
+                        Check eligible junior colleges, compare streams, and get a cleaner admission experience
+                        with a modern interface built for students and parents.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#collegeResults" class="hero-btn primary">
+                            <i class="fas fa-search"></i>
+                            <span>Find Colleges</span>
+                        </a>
+
+                        <a href="https://11thadmission.org.in" target="_blank" rel="noopener noreferrer"
+                            class="hero-btn secondary">
+                            <i class="fas fa-up-right-from-square"></i>
+                            <span>Official Portal</span>
+                        </a>
+                    </div>
                 </div>
-                <div>
-                    <h2>Eligible Junior Colleges</h2>
-                    <p>Your results will appear here after you search.</p>
+
+                <div class="hero-panel">
+                    <div class="stat-card float-up">
+                        <div class="stat-top">
+                            <span>Admission Focus</span>
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="stat-value">SSC → FYJC</div>
+                        <div class="stat-label">Junior college search based on marks, category, city, and stream.</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span>Supported Streams</span>
+                            <i class="fas fa-stream"></i>
+                        </div>
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Science, Commerce, and Arts options available for selection.</div>
+                    </div>
                 </div>
             </div>
-            <div class="section-chip">Results area</div>
-        </div>
 
-        <div id="collegeResults" class="results-container">
-            <div class="placeholder-message">
-                <div class="placeholder-icon">
-                    <i class="fas fa-arrow-up"></i>
+            <div class="section-header">
+                <div class="section-title-wrap">
+                    <div class="icon-wrap">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <div>
+                        <h2>Search Junior Colleges</h2>
+                        <p>Enter your details to find eligible colleges based on admission criteria.</p>
+                    </div>
                 </div>
-                <h3>Ready to search</h3>
-                <p>Enter your 10th marks, category, city, and stream to find colleges.</p>
+                <div class="section-chip">Quick search</div>
             </div>
-        </div>
 
-        <div class="tips-grid info-grid">
-            <div class="tip-card">
-                <div class="tip-icon">
-                    <i class="fas fa-info-circle"></i>
+            <div class="form-card slide-up">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exam">
+                            <i class="fas fa-file-alt"></i>
+                            Qualification
+                        </label>
+                        <select id="exam" onchange="updateFormForExamType()">
+                            <option value="SSC" selected>10th Std (SSC)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exam-percentile" id="percentile-label">
+                            <i class="fas fa-percentage"></i>
+                            <span id="percentile-text">10th Percentage</span>
+                        </label>
+                        <input type="number" id="exam-percentile" step="0.01" placeholder="e.g. 85.50" required />
+                    </div>
                 </div>
-                <h3>Admission Process</h3>
-                <p>
-                    Admissions in Maharashtra are conducted via
-                    <a href="https://11thadmission.org.in" target="_blank" rel="noopener noreferrer">11thadmission.org.in</a>
-                    (CAP Rounds).
-                </p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">
+                            <i class="fas fa-users"></i>
+                            Category
+                        </label>
+                        <select id="category">
+                            <option value="OPEN">OPEN</option>
+                            <option value="OBC">OBC</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">
+                            <i class="fas fa-city"></i>
+                            City
+                        </label>
+                        <select id="city">
+                            <option value="">All Cities</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Nashik">Nashik</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="branch">
+                            <i class="fas fa-stream"></i>
+                            Stream
+                        </label>
+                        <select id="branch">
+                            <option value="Science">Science Stream</option>
+                            <option value="Commerce">Commerce Stream</option>
+                            <option value="Arts">Arts Stream</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="display:none;">
+                        <label for="university">
+                            <i class="fas fa-university"></i>
+                            University
+                        </label>
+                        <select id="university">
+                            <option value="">All Universities</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn-secondary" onclick="checkColleges()">
+                    <i class="fas fa-search"></i>
+                    <span>Check Junior Colleges</span>
+                </button>
             </div>
+
+            <div class="section-header results-header">
+                <div class="section-title-wrap">
+                    <div class="icon-wrap">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                    <div>
+                        <h2>Eligible Junior Colleges</h2>
+                        <p>Your results will appear here after you search.</p>
+                    </div>
+                </div>
+                <div class="section-chip">Results area</div>
+            </div>
+
+            <div id="collegeResults" class="results-container">
+                <div class="placeholder-message">
+                    <div class="placeholder-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h3>Ready to search</h3>
+                    <p>Enter your 10th marks, category, city, and stream to find colleges.</p>
+                </div>
+            </div>
+
+            <div class="tips-grid info-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3>Admission Process</h3>
+                    <p>
+                        Admissions in Maharashtra are conducted via
+                        <a href="https://11thadmission.org.in" target="_blank"
+                            rel="noopener noreferrer">11thadmission.org.in</a>
+                        (CAP Rounds).
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>AI Career &amp; CET Admission Guidance System &copy; 2023</p>
         </div>
-    </section>
-</main>
+    </footer>
 
-<footer class="footer">
-    <div class="container">
-        <p>AI Career &amp; CET Admission Guidance System &copy; 2023</p>
-    </div>
-</footer>
+    <script>
+        document.documentElement.classList.remove('no-js');
+    </script>
 
-<script>
-    document.documentElement.classList.remove('no-js');
-</script>
+    <script src="components/navbar.js"></script>
+    <script src="script.js"></script>
 
-<script src="components/navbar.js"></script>
-<script src="script.js"></script>
+    <script>
+        (function () {
+            const root = document.documentElement;
+            const btn = document.getElementById("themeToggle");
+            let theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
-<script>
-    (function () {
-        const root = document.documentElement;
-        const btn = document.getElementById("themeToggle");
-        let theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            function applyTheme() {
+                root.setAttribute("data-theme", theme);
+                if (!btn) return;
+                btn.innerHTML = theme === "dark"
+                    ? '<i class="fas fa-sun"></i>'
+                    : '<i class="fas fa-moon"></i>';
+                btn.setAttribute(
+                    "aria-label",
+                    theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+                );
+            }
 
-        function applyTheme() {
-            root.setAttribute("data-theme", theme);
-            if (!btn) return;
-            btn.innerHTML = theme === "dark"
-                ? '<i class="fas fa-sun"></i>'
-                : '<i class="fas fa-moon"></i>';
-            btn.setAttribute(
-                "aria-label",
-                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-            );
-        }
+            applyTheme();
 
-        applyTheme();
-
-        if (btn) {
-            btn.addEventListener("click", () => {
-                theme = theme === "dark" ? "light" : "dark";
-                applyTheme();
-            });
-        }
-
-        const reveals = document.querySelectorAll(".fade-in, .slide-up");
-
-        if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("active");
-                    }
+            if (btn) {
+                btn.addEventListener("click", () => {
+                    theme = theme === "dark" ? "light" : "dark";
+                    applyTheme();
                 });
-            }, { threshold: 0.12 });
+            }
 
-            reveals.forEach((el) => observer.observe(el));
-        } else {
-            reveals.forEach((el) => el.classList.add("active"));
-        }
-    })();
-</script>
+            const reveals = document.querySelectorAll(".fade-in, .slide-up");
+
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("active");
+                        }
+                    });
+                }, { threshold: 0.12 });
+
+                reveals.forEach((el) => observer.observe(el));
+            } else {
+                reveals.forEach((el) => el.classList.add("active"));
+            }
+        })();
+    </script>
 </body>
+
 </html>
