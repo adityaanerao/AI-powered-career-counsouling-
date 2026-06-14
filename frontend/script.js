@@ -330,11 +330,11 @@ function displayCareerResults(data) {
                 <h3>${icon} ${rec.career}</h3>
                 ${trendingBadge}
             </div>
-            
+
             <p class="career-desc">${rec.description}</p>
-            
+
             <div class="score-bar">
-                <strong>Match Score:</strong> 
+                <strong>Match Score:</strong>
                 <div class="bar-container">
                     <div class="bar-fill" style="width: ${rec.match_percentage}%"></div>
                     <span class="score-text">${rec.match_percentage}%</span>
@@ -357,7 +357,7 @@ function displayCareerResults(data) {
                 <div class="panel">
                     ${explanationHTML}
                 </div>
-                
+
                 <button class="accordion-btn">Education Path ▼</button>
                 <div class="panel">
                     <p><strong>After 10th:</strong> ${rec.career_path?.after_10th_path || "N/A"}</p>

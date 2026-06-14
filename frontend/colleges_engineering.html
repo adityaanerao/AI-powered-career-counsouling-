@@ -31,6 +31,26 @@
             --radius-lg: 22px;
             --radius-md: 16px;
             --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            --info-card-bg: linear-gradient(180deg, rgba(47, 65, 100, 0.72), rgba(31, 45, 73, 0.72));
+            --glass-bg: linear-gradient(180deg, rgba(17, 28, 48, 0.82), rgba(11, 21, 37, 0.88));
+            --hero-bg: linear-gradient(135deg, rgba(31, 46, 74, 0.92), rgba(15, 27, 51, 0.92));
+        }
+
+        html[data-theme="light"] {
+            --panel: rgba(255, 255, 255, 0.85);
+            --panel-strong: #ffffff;
+            --panel-soft: rgba(24, 35, 53, 0.05);
+            --border: rgba(24, 34, 53, 0.08);
+            --text: #182335;
+            --muted: #617089;
+            --primary: #0f6fff;
+            --primary-2: #5b8cff;
+            --success: #16a085;
+            --shadow-lg: 0 24px 60px rgba(17, 24, 39, 0.16);
+            --shadow-md: 0 16px 40px rgba(17, 24, 39, 0.12);
+            --info-card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(244, 247, 251, 0.95));
+            --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(244, 247, 251, 0.9));
+            --hero-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(234, 240, 248, 0.95));
         }
 
        body {
@@ -51,6 +71,19 @@
     background-attachment: fixed;
 
     overflow-x: hidden;
+}
+
+html[data-theme="light"] body {
+    background:
+        linear-gradient(
+            rgba(243, 247, 251, 0.82),
+            rgba(237, 243, 248, 0.88)
+        ),
+        url("assets/images/img.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
         .container {
@@ -88,7 +121,7 @@
             grid-template-columns: 1.55fr 0.9fr;
             gap: 26px;
             padding: 34px;
-            background: linear-gradient(135deg, rgba(31, 46, 74, 0.92), rgba(15, 27, 51, 0.92));
+            background: var(--hero-bg);
             border: 1px solid var(--border);
             border-radius: 34px;
             backdrop-filter: blur(18px);
@@ -160,9 +193,9 @@
             gap: 8px;
             padding: 12px 16px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #dfe7f6;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: var(--panel-soft);
+            color: var(--text);
+            border: 1px solid var(--border);
             font-size: 0.92rem;
         }
 
@@ -174,8 +207,8 @@
         .info-card {
             padding: 22px;
             border-radius: 28px;
-            background: linear-gradient(180deg, rgba(47, 65, 100, 0.72), rgba(31, 45, 73, 0.72));
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--info-card-bg);
+            border: 1px solid var(--border);
             backdrop-filter: blur(14px);
             box-shadow: var(--shadow-md);
             transition: var(--transition);
@@ -195,7 +228,7 @@
         .info-head h3 {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #eaf0ff;
+            color: var(--text);
             margin: 0;
         }
 
@@ -205,15 +238,15 @@
             display: grid;
             place-items: center;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.08);
-            color: #f2f6ff;
+            background: var(--panel-soft);
+            color: var(--primary);
         }
 
         .info-value {
             font-size: 2rem;
             font-weight: 800;
             line-height: 1.1;
-            color: white;
+            color: var(--text);
             margin-bottom: 10px;
         }
 
@@ -224,7 +257,7 @@
         }
 
         .glass-section {
-            background: linear-gradient(180deg, rgba(17, 28, 48, 0.82), rgba(11, 21, 37, 0.88));
+            background: var(--glass-bg);
             border: 1px solid var(--border);
             border-radius: 30px;
             padding: 28px;
@@ -253,7 +286,7 @@
         }
 
         .section-header h2 {
-            color: white;
+            color: var(--text);
             font-size: 1.55rem;
             margin: 0 0 6px;
             font-weight: 700;
@@ -285,7 +318,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #e6edff;
+            color: var(--text);
             font-weight: 500;
             margin-bottom: 10px;
             font-size: 0.95rem;
@@ -297,9 +330,9 @@
             min-height: 54px;
             border-radius: 16px;
             padding: 14px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.045);
-            color: white;
+            border: 1px solid var(--border);
+            background: var(--panel-soft);
+            color: var(--text);
             outline: none;
             font-size: 0.96rem;
             transition: var(--transition);
@@ -366,9 +399,9 @@
             gap: 8px;
             padding: 10px 14px;
             border-radius: 999px;
-            color: #dcebff;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: var(--text);
+            background: var(--panel-soft);
+            border: 1px solid var(--border);
             font-size: 0.88rem;
             font-weight: 600;
         }
@@ -404,7 +437,7 @@
         }
 
         .placeholder-message h3 {
-            color: white;
+            color: var(--text);
             font-size: 1.2rem;
             margin-bottom: 10px;
         }
@@ -499,7 +532,7 @@
 
 <main class="container engineering-page">
     <div class="top-actions">
-        <button class="theme-toggle" aria-label="Dark mode">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <i class="fas fa-moon"></i>
         </button>
     </div>

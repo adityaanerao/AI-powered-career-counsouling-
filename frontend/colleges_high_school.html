@@ -967,31 +967,6 @@
 
     <script>
         (function () {
-            const root = document.documentElement;
-            const btn = document.getElementById("themeToggle");
-            let theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-
-            function applyTheme() {
-                root.setAttribute("data-theme", theme);
-                if (!btn) return;
-                btn.innerHTML = theme === "dark"
-                    ? '<i class="fas fa-sun"></i>'
-                    : '<i class="fas fa-moon"></i>';
-                btn.setAttribute(
-                    "aria-label",
-                    theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-                );
-            }
-
-            applyTheme();
-
-            if (btn) {
-                btn.addEventListener("click", () => {
-                    theme = theme === "dark" ? "light" : "dark";
-                    applyTheme();
-                });
-            }
-
             const reveals = document.querySelectorAll(".fade-in, .slide-up");
 
             if ("IntersectionObserver" in window) {

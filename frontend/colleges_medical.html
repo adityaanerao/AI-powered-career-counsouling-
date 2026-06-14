@@ -1002,32 +1002,6 @@ select option:hover {
 <!-- Extra JS only for UI enhancements -->
 <script>
     (function () {
-        const root = document.documentElement;
-        const themeToggle = document.getElementById('themeToggle');
-        let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        root.setAttribute('data-theme', currentTheme);
-
-        function updateThemeIcon() {
-            if (!themeToggle) return;
-            themeToggle.innerHTML = currentTheme === 'dark'
-                ? '<i class="fas fa-sun"></i>'
-                : '<i class="fas fa-moon"></i>';
-            themeToggle.setAttribute(
-                'aria-label',
-                currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-            );
-        }
-
-        updateThemeIcon();
-
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function () {
-                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                root.setAttribute('data-theme', currentTheme);
-                updateThemeIcon();
-            });
-        }
-
         const revealItems = document.querySelectorAll('.fade-in-page');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

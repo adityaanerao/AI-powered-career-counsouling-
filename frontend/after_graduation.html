@@ -1300,7 +1300,7 @@
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
 
-        let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        let currentTheme = localStorage.getItem("theme") || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         root.setAttribute('data-theme', currentTheme);
 
         function updateThemeIcon() {
@@ -1320,6 +1320,7 @@
             themeToggle.addEventListener('click', function () {
                 currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 root.setAttribute('data-theme', currentTheme);
+                localStorage.setItem("theme", currentTheme);
                 updateThemeIcon();
             });
         }

@@ -36,16 +36,38 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Theme toggle (if present)
+    // Theme logic: load from localStorage or fallback to default
+    const html = document.documentElement;
+    let currentTheme = localStorage.getItem("theme");
+    
+    // If not set in localStorage, detect if page had data-theme pre-set, or fallback to light
+    if (!currentTheme) {
+        currentTheme = html.getAttribute("data-theme") || "light";
+    }
+    
+    html.setAttribute("data-theme", currentTheme);
+
     const themeToggle = document.getElementById('themeToggle');
+    
+    function updateIcon(theme) {
+        if (!themeToggle) return;
+        themeToggle.innerHTML = theme === 'dark'
+            ? '<i class="fas fa-sun"></i>'
+            : '<i class="fas fa-moon"></i>';
+        themeToggle.setAttribute(
+            'aria-label',
+            theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+        );
+    }
+
     if (themeToggle) {
+        updateIcon(currentTheme);
         themeToggle.addEventListener('click', function () {
-            const html = document.documentElement;
-            const isDark = html.getAttribute('data-theme') === 'dark';
-            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            this.innerHTML = isDark
-                ? '<i class="fas fa-moon"></i>'
-                : '<i class="fas fa-sun"></i>';
+            const current = html.getAttribute("data-theme") || "light";
+            const newTheme = current === "dark" ? "light" : "dark";
+            html.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+            updateIcon(newTheme);
         });
     }
 });
